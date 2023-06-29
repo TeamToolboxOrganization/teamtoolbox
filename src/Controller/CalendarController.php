@@ -327,6 +327,10 @@ class CalendarController extends AbstractController
          */
         $currentUser = $this->getUser();
 
+        if($currentUser->getMsToken() == null){
+            return [];
+        }
+
         // Get MS Graph access for user
         $graph = $this->getGraph($currentUser, $msTokenController, $managerRegistry);
 

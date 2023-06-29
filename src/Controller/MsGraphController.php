@@ -238,7 +238,7 @@ class MsGraphController extends AbstractController
 
     public function getAccessToken(User $user, ManagerRegistry $managerRegistry): ?string{
         $msToken = $user->getMsToken();
-        if(empty($msToken->getAccessToken()) || empty($msToken->getRefreshToken()) || empty($msToken->getTokenExpires())){
+        if(empty($msToken) || empty($msToken->getAccessToken()) || empty($msToken->getRefreshToken()) || empty($msToken->getTokenExpires())){
             return null;
         }
 
