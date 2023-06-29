@@ -17,6 +17,7 @@ Installation
 $ cd my_project/
 $ composer install
 $ npm install
+$ npm run build
 ```
 
 Usage
