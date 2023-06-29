@@ -10,6 +10,8 @@ Requirements
   * PHP 8.2 or higher;
   * PDO-SQLite PHP extension enabled;
   * and the [usual Symfony application requirements][2].
+  * NPM 19.9.0
+  * Composer 2.5.8
 
 Installation
 ------------
