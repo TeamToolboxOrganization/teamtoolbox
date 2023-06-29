@@ -1,0 +1,26 @@
+{% extends 'basev2.html.twig' %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Liste des plans de tests</h1>{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="#">Plans de tests</a></li>
+{% endblock %}
+
+{% block body %}
+
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Etat</th>
+    </tr>
+    {% for plan in plans %}
+    <tr>
+        <td><a href="{{ path('get_suites_tests', {planId: plan.id}) }}">{{ plan.name }}</a></td>
+        <td>{{ plan.state }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}
+
+

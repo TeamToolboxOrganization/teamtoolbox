@@ -1,0 +1,25 @@
+{% if mindset.tendance == 0 and mindset.value >= 6 %}
+    <span role="img" class="text-succes" title="{{ mindset.tendance }}">
+        <i class="fas fa-long-arrow-alt-right"></i>
+    </span>
+{% elseif mindset.tendance == 0 and mindset.value < 6 %}
+    <span role="img" class="text-critical" title="{{ mindset.tendance }}">
+        <i class="fas fa-long-arrow-alt-right"></i>
+    </span>
+{% elseif mindset.tendance > 0 and mindset.tendance <= 1 %}
+    <span role="img" class="text-succes" title="{{ mindset.tendance }}">
+        <i class="fas fa-long-arrow-alt-up rotate-arrow-up"></i>
+    </span>
+{% elseif mindset.tendance > 0 %}
+    <span role="img" class="text-succes" title="{{ mindset.tendance }}">
+        <i class="fas fa-long-arrow-alt-up"></i>
+    </span>
+{% elseif mindset.tendance >= -1 %}
+    <span role="img" class="text-warn" title="{{ mindset.tendance }}">
+        <i class="fas fa-long-arrow-alt-down rotate-arrow-down"></i>
+    </span>
+{% else %}
+    <span role="img" class="text-critical" title="{{ mindset.tendance }}">
+        <i class="fas fa-long-arrow-alt-down"></i>
+    </span>
+{% endif %}

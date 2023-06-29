@@ -1,0 +1,78 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'note_index' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block current_page_name %}
+    {{ title }}
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Bloc-Notes</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('manager_note_new') }}" class="nav-link"><i class="fas fa-plus-circle"></i> Nouvelle note personnelle</a>
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
+        <a onclick="exportNotes();" class="nav-link"><i class="fas fa-file-download"></i> Exporter mes notes</a>
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
+        <a onclick="document.getElementById('importNoteInput').click();" class="nav-link"><i class="fas fa-file-upload"></i> Charger mes notes</a>
+        <input style="display: none" type="file" id="importNoteInput" />
+    </li>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('readNote') }}
+    {{ encore_entry_script_tags('deleteNote') }}
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('page_collab') }}
+    {{ encore_entry_link_tags('page_dashboard') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid" id="tuto" data-start="{{ 'tuto.start'|trans }}" data-stop="{{ 'tuto.stop'|trans }}" data-previous="{{ 'tuto.previous'|trans }}" data-next="{{ 'tuto.next'|trans }}" data-title="{{ 'tuto.dashboard.title'|trans }}" data-text="{{ 'tuto.dashboard.text'|trans }}">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <span class="main_text_color">
+            Le contenu de vos notes est uniquement stocké dans votre navigateur.
+            Pensez à faire des sauvegardes régulièrement pour ne pas les perdre.
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {%  if allNotes is not empty %}
+                <div class="card card-primary" id="MoodCard" data-title="{{ 'tuto.dashboard.moodcard.title'|trans }}" data-text="{{ 'tuto.dashboard.moodcard.text'|trans }}">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-history"></i> Mes dernières notes
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% include 'widget/lastNotes.html.twig' with {'notes': allNotes, 'showTitle': false} %}
+                    </div>
+                </div>
+            {% else %}
+                <h1>Aucune note pour le moment</h1>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

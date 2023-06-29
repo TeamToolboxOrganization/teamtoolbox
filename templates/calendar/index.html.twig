@@ -1,0 +1,41 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'calendar_index' %}
+
+{% block title %}Calendrier{% endblock %}
+
+{% block current_page_name %}
+Calendrier
+{% endblock %}
+
+{% block contentHeader %}
+{% endblock %}
+
+{% block contextual_menu %}
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="filters_wrapper" style="padding-right: 10px;">
+        <label class="btn btn-info active">
+            <i class="fas fa-filter"></i>
+        </label>
+        <label class="btn btn-primary active" style="background-color: #CC492A; border-color: #000000; color: #FFFFFF;">
+            <input type="checkbox" id="vacations" name="calendarFilter" value="Congés" checked/>Congés
+        </label>
+        <label class="btn btn-primary active" style="background-color: #376A1F; border-color: #000000; color: #FFFFFF;">
+            <input type="checkbox" id="mep" name="calendarFilter" value="MEP" checked/>MEP
+        </label>
+        <label class="btn btn-primary active" style="background-color: #003FC0; border-color: #000000; color: #FFFFFF;">
+            <input type="checkbox" id="office" name="calendarFilter" value="Bureau" checked/>Bureau
+        </label>
+        <label class="btn btn-primary active" style="background-color: #8B5000; border-color: #000000; color: #FFFFFF;">
+            <input type="checkbox" id="home" name="calendarFilter" value="Télétravail" checked/>Télétravail
+        </label>
+        <label class="btn btn-primary active" style="background-color: #EB144C; border-color: #000000; color: #FFFFFF;">
+            <input type="checkbox" id="birthdays" name="calendarFilter" value="Anniversaire" checked/>Anniversaire
+        </label>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="bg-white">
+        {% include 'widget/calendar.html.twig' with {'showTitle': false, 'itemType': "user", 'itemId': 0, 'lang': app.request.locale, 'alldates': true} %}
+    </div>
+{% endblock %}

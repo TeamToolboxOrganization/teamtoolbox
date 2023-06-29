@@ -1,0 +1,14 @@
+[
+{% set i = 0 %}
+{% for userDate in userDates %}{% set i = i+1 %}
+    {
+        {% if userDate.amPm == 1 %}{% set amPm = " (Matin)" %}{% elseif userDate.amPm == 2 %}{% set amPm = " (Aprem)" %}{% else %}{% set amPm = "" %}{% endif %}
+        {% if userDate.importFromRhpi == 1 %}{% set workType = "Télétravail" %}{% else %}{% set workType = "Bureau" %}{% endif %}
+        {% if not onlyType %}"title": "{{ userDate.collab.fullName }}{{ amPm }}",{% else %}"title": "{{ workType }}{{ amPm }}",{% endif %}
+        "url": "{{ path('collab_index', {userId: userDate.collab.id}) }}",
+        "start": "{{ userDate.startAt|format_datetime(pattern="yyyy-MM-dd") }}"{% if userDate.endAt %},
+        "end": "{{ userDate.lastDay|format_datetime(pattern="yyyy-MM-dd") }}"{% endif %},
+        "icon": "{% if userDate.importFromRhpi == 1 %}fa-laptop-house{% else %}fa-building{% endif %}"
+    }{% if i != userDates|length %},{% endif %}
+{% endfor %}
+]

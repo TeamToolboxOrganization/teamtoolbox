@@ -1,0 +1,20 @@
+[
+{% set i = 0 %}
+{% for vacation in vacations %}{% set i = i+1 %}
+    {
+    {% if not onlyType %}"title": "{{ vacation.collab.fullName }}",{% else %}"title": "{{ vacation.type }}",{% endif %}
+    "url": "{{ path('collab_index', {userId: vacation.collab.id}) }}",
+    "start": "{{ vacation.startAt|format_datetime(pattern="yyyy-MM-dd") }}",
+    "end": "{{ vacation.lastDay|format_datetime(pattern="yyyy-MM-dd") }}",
+    "icon": "fa-suitcase"
+    }{% if i != vacations|length %},{% endif %}
+{% endfor %}{% if vacations|length > 0 and holidays|length > 0 %},{% endif %}
+    {% set i = 0 %}
+    {% for holiday in holidays %}{% set i = i+1 %}
+    {
+        "title": "{{ holiday.label }}",
+        "start": "{{ holiday.startAt|format_datetime(pattern="yyyy-MM-dd") }}",
+        "icon": "fa-suitcase"
+    }{% if i != holidays|length %},{% endif %}
+{% endfor %}
+]

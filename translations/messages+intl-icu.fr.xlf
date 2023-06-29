@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="mng.toolbox.launcher">
+                <source>mng.toolbox.launcher</source>
+                <target><![CDATA[Ouverture de la <strong>toolbox manager</strong> de Manager Dashboard.]]></target>
+            </trans-unit>
+			<trans-unit id="menu.export">
+				<source>menu.export</source>
+				<target>Pointage 7Pace</target>
+			</trans-unit>
+			<trans-unit id="button.export">
+				<source>button.export</source>
+				<target>Exporter</target>
+			</trans-unit>
+			<trans-unit id="text.export">
+				<source>text.export</source>
+				<target>Choix de vos paramètres d'exportation :</target>
+			</trans-unit>
+			<trans-unit id="text.info0.export">
+				<source>text.info0.export</source>
+				<target>Pour que cet outil fonctionne il faut :</target>
+			</trans-unit>
+			<trans-unit id="text.info1.export">
+				<source>text.info1.export</source>
+				<target>Classifier vos réunions Outlook en mettant en première catégorie le nom de catégorie le plus adéquat parmis ceux marqués en dessous</target>
+			</trans-unit>
+			<trans-unit id="text.info2.export">
+				<source>text.info2.export</source>
+				<target>Classifier uniquement les réunions auxquels vous êtes présents</target>
+			</trans-unit>
+			<trans-unit id="label.workActivity.export">
+				<source>label.workActivity.export</source>
+				<target>Activité par défaut</target>
+			</trans-unit>
+			<trans-unit id="label.workItem.export">
+				<source>label.workItem.export</source>
+				<target>Produit</target>
+			</trans-unit><trans-unit id="label.startDate.export">
+				<source>label.startDate.export</source>
+				<target>Date de début</target>
+			</trans-unit>
+			<trans-unit id="label.endDate.export">
+				<source>label.endDate.export</source>
+				<target>Date de fin</target>
+			</trans-unit>
+            <trans-unit id="menu.choose_language">
+                <source>menu.choose_language</source>
+                <target>Langue</target>
+            </trans-unit>
+            <trans-unit id="menu.user">
+                <source>menu.user</source>
+                <target>Mon Compte</target>
+            </trans-unit>
+            <trans-unit id="menu.logout">
+                <source>menu.logout</source>
+                <target>Déconnexion</target>
+            </trans-unit>
+            <trans-unit id="menu.dashboard">
+                <source>menu.dashboard</source>
+                <target>Dashboard</target>
+            </trans-unit>
+            <trans-unit id="menu.map">
+                <source>menu.map</source>
+                <target>Plan bureau</target>
+            </trans-unit>
+            <trans-unit id="menu.mypage">
+                <source>menu.mypage</source>
+                <target>Ma page</target>
+            </trans-unit>
+            <trans-unit id="menu.squads">
+                <source>menu.squads</source>
+                <target>Squads</target>
+            </trans-unit>
+            <trans-unit id="menu.mynotes">
+                <source>menu.mynotes</source>
+                <target>Bloc-Notes</target>
+            </trans-unit>
+            <trans-unit id="menu.objectives">
+                <source>menu.objectives</source>
+                <target>Objectifs</target>
+            </trans-unit>
+            <trans-unit id="menu.caldendar">
+                <source>menu.caldendar</source>
+                <target>Calendrier Global</target>
+            </trans-unit>
+            <trans-unit id="menu.productionplanning">
+                <source>menu.productionplanning</source>
+                <target>Mise en prod</target>
+            </trans-unit>
+            <trans-unit id="menu.toolbox">
+                <source>menu.toolbox</source>
+                <target>Boîte à outils</target>
+            </trans-unit>
+            <trans-unit id="action.sign_in">
+                <source>action.sign_in</source>
+                <target>Se connecter via login/password</target>
+            </trans-unit>
+            <trans-unit id="title.login">
+                <source>title.login</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="tuto.previous">
+                <source>tuto.previous</source>
+                <target>Précédent</target>
+            </trans-unit>
+            <trans-unit id="tuto.next">
+                <source>tuto.next</source>
+                <target>Suivant</target>
+            </trans-unit>
+            <trans-unit id="tuto.start">
+                <source>tuto.start</source>
+                <target>Montre moi</target>
+            </trans-unit>
+            <trans-unit id="tuto.stop">
+                <source>tuto.stop</source>
+                <target>Quitter</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.title">
+                <source>tuto.dashboard.title</source>
+                <target>BIENVENUE SUR VOTRE DASHBOARD</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.text">
+                <source>tuto.dashboard.text</source>
+                <target>Je suis votre assistant et je vais vous présenter les différentes informations que vous pouvez retrouver sur cette page.</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.officecard.title">
+                <source>tuto.dashboard.officecard.title</source>
+                <target>PRÉSENTS AU BUREAU</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.officecard.text">
+                <source>tuto.dashboard.officecard.text</source>
+                <target>Vous pouvez savoir qui sera présent dans les jours à venir au bureau. Vous pouvez également préciser si vous serez vous-même présent soit le matin, soit l'aprem, soit toute la journée</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.moodcard.title">
+                <source>tuto.dashboard.moodcard.title</source>
+                <target>BIEN ÊTRE GLOBAL</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.moodcard.text">
+                <source>tuto.dashboard.moodcard.text</source>
+                <target>Permet de voir le mood global des personnes sur le plateau.</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.birthdaycard.title">
+                <source>tuto.dashboard.birthdaycard.title</source>
+                <target>PROCHAINS ANNIVERSAIRES</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.birthdaycard.text">
+                <source>tuto.dashboard.birthdaycard.text</source>
+                <target>Vous pouvez voir les prochains anniversaires à fêter sur le plateau.</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.mepcard.title">
+                <source>tuto.dashboard.mepcard.title</source>
+                <target>LES PROCHAINES MEP</target>
+            </trans-unit>
+            <trans-unit id="tuto.dashboard.mepcard.text">
+                <source>tuto.dashboard.mepcard.text</source>
+                <target>Vous pouvez savoir qui sera en charge des prochaines mises à jour LxMS ainsi que leurs dates.</target>
+            </trans-unit>
+            <trans-unit id="title.edit_user">
+                <source>title.edit_user</source>
+                <target>Edition du compte</target>
+            </trans-unit>
+            <trans-unit id="label.username">
+                <source>label.username</source>
+                <target>Login</target>
+            </trans-unit>
+            <trans-unit id="label.fullname">
+                <source>label.fullname</source>
+                <target>Nom complet</target>
+            </trans-unit>
+            <trans-unit id="label.email">
+                <source>label.email</source>
+                <target>Mail</target>
+            </trans-unit>
+            <trans-unit id="action.save">
+                <source>action.save</source>
+                <target>Sauvegarder</target>
+            </trans-unit>
+            <trans-unit id="catgories">
+                <source>catgories</source>
+                <target>Catégories</target>
+            </trans-unit>
+            <trans-unit id="organisateur">
+                <source>organisateur</source>
+                <target>Organisateur</target>
+            </trans-unit>
+            <trans-unit id="sujet">
+                <source>sujet</source>
+                <target>Sujet</target>
+            </trans-unit>
+            <trans-unit id="dbut_le">
+                <source>dbut_le</source>
+                <target>Début le</target>
+            </trans-unit>
+            <trans-unit id="fin_le">
+                <source>fin_le</source>
+                <target>Fin le</target>
+            </trans-unit>
+            <trans-unit id="dure">
+                <source>dure</source>
+                <target>Durée</target>
+            </trans-unit>
+            <trans-unit id="jours">
+                <source>jours</source>
+                <target>jour(s)</target>
+            </trans-unit>
+            <trans-unit id="mettre_jour_le_mot_de_passe">
+                <source>mettre_jour_le_mot_de_passe</source>
+                <target>Mettre à jour le mot de passe</target>
+            </trans-unit>
+            <trans-unit id="mot_de_passe">
+                <source>mot_de_passe</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+            <trans-unit id="edition_du_compte">
+                <source>edition_du_compte</source>
+                <target>Edition du compte</target>
+            </trans-unit>
+            <trans-unit id="mise_jour_du_mot_de_passe">
+                <source>mise_jour_du_mot_de_passe</source>
+                <target>Mise à jour du mot de passe</target>
+            </trans-unit>
+            <trans-unit id="param.sup.export">
+                <source>param.sup.export</source>
+                <target>Export avancé</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

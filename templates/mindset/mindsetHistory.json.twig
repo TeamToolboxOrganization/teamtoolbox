@@ -1,0 +1,4 @@
+{
+    "labels":[{% set i = 0 %}{% for mindset in mindsetHistory %}{% set i = i+1 %}"{{ mindset.publishedAt|format_datetime(pattern="dd/MM/YYYY") }}"{% if i != mindsetHistory|length %},{% endif %}{% endfor %}],
+    "data":[{% set i = 0 %}{% for mindset in mindsetHistory %}{% set i = i+1 %}"{{ mindset.value }}"{% if i != mindsetHistory|length %},{% endif %}{% endfor %}]
+}

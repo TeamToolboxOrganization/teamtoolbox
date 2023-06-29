@@ -1,0 +1,62 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'msgraph_index' %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('outlook_calendar') }}
+{% endblock %}
+
+{% block title %}
+    Réservation O3
+{% endblock %}
+
+{% block current_page_name %}
+    Réservation O3
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Réservation O3</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+{% endblock %}
+
+{% block body %}
+    <div class="row main_text_color">
+        <div class="table-responsive">
+            <table class="table table-hover main_text_color">
+                <thead>
+                <tr>
+                    <th>Manager</th>
+                    <th>Réservation</th>
+                    <th>{{ 'dbut_le'|trans({}, 'messages') }}</th>
+                    <th>{{ 'fin_le'|trans({}, 'messages') }}</th>
+                    <th>{{ 'dure'|trans({}, 'messages') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for event in events %}
+                    {{ dump(event)}}
+                    <tr>
+                        <td>{{ event.organizer }}</td>
+                        <td><a href="{{ path('msgraph_update_event', ) }}"><span class="badge badge-primary">Réserver</span></a></td>
+                        <td>{{ event.start|date("d/m/y H:i", "Europe/Paris") }}</td>
+                        <td>{{ event.end|date("H:i", "Europe/Paris") }}</td>
+                        {% set nbDays = (event.timeDiff | date("%d")) %}
+                        {% if nbDays == 0 %}
+                            {% set nbHours = (event.timeDiff | date("%H")) %}
+                            {% if nbHours == 0 %}
+                                <td>{{ event.timeDiff | date("%I min") }}</td>
+                            {% else %}
+                                <td>{{ event.timeDiff | date("%H h %I") }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td>{{ nbDays }} {{ 'jours'|trans({}, 'messages') }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

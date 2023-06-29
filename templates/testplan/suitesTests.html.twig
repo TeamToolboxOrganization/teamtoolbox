@@ -1,0 +1,27 @@
+{% extends 'basev2.html.twig' %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Tests Suites : {{ planId }} </h1>{% endblock %}
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ path('get_plans_list') }}">Plans de tests</a></li>
+    <li class="breadcrumb-item active">Tests Suites</li>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body p-0">
+                        <table class="table table-hover">
+                            <tbody>
+                            {% for suite in suites %}
+                                {% include 'testplan/planDetailsSubmenu.html.twig' with {'suite': suite, 'planId': planId} %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

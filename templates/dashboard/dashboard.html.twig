@@ -1,0 +1,190 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block contentHeaderTitle %}<h1 class="m-0">Dashboard</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_granted('ROLE_MANAGER') %}
+        {{ encore_entry_script_tags('chart') }}
+    {% endif %}
+    {% if showWizard %}
+        {{ encore_entry_script_tags('tuto_dashboard') }}
+    {% endif %}
+    {{ encore_entry_script_tags('planifiedActivities') }}
+
+    {{ encore_entry_script_tags('readNote') }}
+    {{ encore_entry_script_tags('checkNote') }}
+
+    {{ encore_entry_script_tags('office_action') }}
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('page_dashboard') }}
+    {% if showWizard %}
+        {{ encore_entry_link_tags('tuto_dashboard') }}
+    {% endif %}
+{% endblock %}
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('dashboard_index')}}?showWizard=true" class="nav-link"><i class="fa-solid fa-circle-info"></i> Revoir le wizard</a>
+    </li>
+{% endblock %}
+
+{%  block body %}
+
+<div class="container-fluid" id="tuto" data-start="{{ 'tuto.start'|trans }}" data-stop="{{ 'tuto.stop'|trans }}" data-previous="{{ 'tuto.previous'|trans }}" data-next="{{ 'tuto.next'|trans }}" data-title="{{ 'tuto.dashboard.title'|trans }}" data-text="{{ 'tuto.dashboard.text'|trans }}">
+    {% if is_granted('ROLE_MANAGER') %}
+    <div class="row">
+        <div class="col-md-6">
+                <div class="card card-primary" id="MoodCard" data-title="{{ 'tuto.dashboard.moodcard.title'|trans }}" data-text="{{ 'tuto.dashboard.moodcard.text'|trans }}">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            {% include 'widget/mindset.html.twig' with {'value': mindset.value} %} {% include 'widget/mindsetTendance.html.twig' with {'mindset': mindset} %} Bien être Global
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            <canvas id="div_chart" data-itemid="0" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-md-6">
+            {% include 'widgetv2/o3Selector.html.twig' with {'o3List': o3List, 'title': "Mes prochaines O3" } %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-6">
+            {% include 'widgetv2/officePresence.html.twig' with {'officeByDate': officeByDate} %}
+        </div>
+        <div class="col-md-6">
+            {% include 'widgetv2/birthdays.html.twig' with {'nextBirthdays': nextBirthdays, 'showTitle': false} %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {% if app.user.msToken is not empty %}
+            {% include 'widgetv2/calendarMS.html.twig' with {'events': events} %}
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-solid fa-clock"></i> Répartition des heures de la semaine</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row main_text_color">
+                        <div class="col">
+                            <div id="weekDiv">
+                                <canvas class="doughnut" id="div_chart_current_week" style="display: none"></canvas>
+                                <div class="loader"></div>
+                                <button  class="btn btn-primary" id="weekButton" style="display: none">Export CSV</button>
+                                <div class="loading"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-solid fa-clock"></i> Répartition des heures du mois</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row main_text_color">
+                        <div class="col">
+                            <div id="monthDiv">
+                                <canvas class="doughnut" id="div_chart_current_month" style="display: none"></canvas>
+                                <div class="loader"></div>
+                                <button class="btn btn-primary" id="monthButton" style="display: none">Export CSV</button>
+                                <div class="loading"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {% include 'widgetv2/todo.html.twig' with {'notes': toDiscussNotes, 'showTitle': false, 'check': true} %}
+        </div>
+        <div class="col-md-6">
+            <div class="card card-success" id="MepCard" data-title="{{ 'tuto.dashboard.mepcard.title'|trans }}" data-text="{{ 'tuto.dashboard.mepcard.text'|trans }}">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-truck-loading"></i> Prochaines MEP</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% include 'widget/mepDates.html.twig' with {'mepDates': nextMepDates} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {%  if externalContent is not empty %}
+    <div class="row">
+        <div class="col">
+            <div class="card card-success" id="MediaContentCard">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fa-solid fa-circle-play"></i> Contenu du moment : {{ externalTitle|raw }}</h3>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% include 'widget/emberaWidget.html.twig' with {'externalContent': externalContent, 'externalTitle': externalTitle, 'showTitle': true} %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+{%  endblock %}

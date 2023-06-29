@@ -1,0 +1,44 @@
+{% extends 'basev2.html.twig' %}
+{% block title %}
+    Liste des Projets
+{% endblock %}
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('dashboard_index')}}" class="nav-link"><i class="fa-solid fa-map-location-dot"></i> Retour au Dashboard</a>
+    </li>
+{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <table class="table table-borderless main_text_color">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Produits</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+                <tr>
+                    <th scope="row" class="center-item-table">{{ project.id }}</th>
+                    <td class="center-item-table">
+                        <a href="{{ path('project_details', {id: project.id})}}">
+                            {{ project.name }}
+                        </a>
+                    </td>
+                    <td class="center-item-table">{{ project.comment }}</td>
+                    <td>
+                        {% for product in project.products %}
+                            <a href="{{ path('app_product_show', {id: product.id})}}">{{ product.name }}</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+

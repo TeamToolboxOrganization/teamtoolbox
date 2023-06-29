@@ -1,0 +1,12 @@
+[
+{% set i = 0 %}
+{% for userDate in userDates %}{% set i = i+1 %}
+    {
+        {% if userDate.amPm == 1 %}{% set amPm = " (Matin)" %}{% elseif userDate.amPm == 2 %}{% set amPm = " (Aprem)" %}{% else %}{% set amPm = "" %}{% endif %}
+        {% if not onlyType %}"title": "{{ userDate.collab.fullName }}{{ amPm }}",{% else %}"title": "{{ userDate.type }}{{ amPm }}",{% endif %}
+        "url": "{{ path('collab_index', {userId: userDate.collab.id}) }}",
+        "start": "{{ userDate.startAt|format_datetime(pattern="yyyy-MM-dd") }}"{% if userDate.endAt %},
+        "end": "{{ userDate.endAt|format_datetime(pattern="yyyy-MM-dd") }}"{% endif %}
+    }{% if i != userDates|length %},{% endif %}
+{% endfor %}
+]

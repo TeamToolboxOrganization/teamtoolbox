@@ -1,0 +1,20 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}New Product{% endblock %}
+
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('app_product_index') }}" class="nav-link"><i class="fas fa-users-cog"></i> Retour à la liste des produits</a>
+    </li>
+{% endblock %}
+
+{% block body %}
+
+<div class="container main_text_color">
+    <h1>Création d'un nouveau produit</h1>
+
+    {{ include('product/_form.html.twig') }}
+</div>
+
+{% endblock %}

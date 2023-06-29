@@ -1,0 +1,21 @@
+{% if type == 'One-To-One' %}
+    <div class="col-sm-auto text-primary" title="One-to-one">
+        <i class="far fa-comments"></i>
+    </div>
+{% elseif type == 'Note'  %}
+    <div class="col-sm-auto text-primary" title="Note">
+        <i class="fa-regular fa-note-sticky"></i>
+    </div>
+{% elseif type == 'Todo'  %}
+    <div class="col-sm-auto text-primary" title="Todo">
+        <i class="fa-solid fa-clipboard-list"></i>
+    </div>
+{% elseif type == 'Sujet à aborder' %}
+    <div class="col-sm-auto text-warning" title="Sujet à aborder">
+        <i class="fas fa-comments"></i>
+    </div>
+{% elseif type == 'Sujet à suivre' %}
+    <div class="col-sm-auto text-info" title="Sujet à suivre">
+        <i class="far fa-flag"></i>
+    </div>
+{% endif %}

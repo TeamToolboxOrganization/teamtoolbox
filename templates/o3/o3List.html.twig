@@ -1,0 +1,31 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Créneaux O3{% endblock %}
+
+{% block current_page_name %}
+    Créneaux O3
+{% endblock %}
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('collab_index', {userId: manager.id})}}" class="nav-link"><i class="fa-regular fa-circle-left"></i> Retour</a>
+    </li>
+    {% if manager.id is defined and manager.id == app.user.id %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('import_o3_slot')}}" class="nav-link"><i class="fa-regular fa-calendar-plus"></i> Import de créneaux</a>
+    </li>
+    {% endif %}
+{% endblock %}
+
+{% block stylesheet_page %}
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Créneaux O3 avec {{ manager.fullName }}</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block body %}
+
+    {% include 'widgetv2/o3Selector.html.twig' with {'o3List': o3List} %}
+
+{% endblock %}
+

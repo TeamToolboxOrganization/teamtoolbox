@@ -1,0 +1,51 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+    # This parameter defines the codes of the locales (languages) enabled in the application
+    app_locales: en|fr
+    app.notifications.email_sender: anonymous@example.com
+    pictures_directory: '%kernel.project_dir%/public/uploads/pictures'
+    everwin_directory: '%kernel.project_dir%/public/uploads/everwin'
+    xlsx_directory: '%kernel.project_dir%/public/uploads/xlsx'
+    azure.appId: '%env(resolve:OAUTH_APP_ID)%'
+    azure.appSecret: '%env(resolve:OAUTH_APP_SECRET)%'
+    azure.redirectUri: '%env(resolve:OAUTH_REDIRECT_URI)%'
+    azure.scopes: '%env(resolve:OAUTH_SCOPES)%'
+    azure.authority: '%env(resolve:OAUTH_AUTHORITY)%'
+    azure.authorizeEndpoint: '%env(resolve:OAUTH_AUTHORIZE_ENDPOINT)%'
+    azure.tokenEndpoint: '%env(resolve:OAUTH_TOKEN_ENDPOINT)%'
+    jira_url: '%env(resolve:JIRA_URL)%'
+    gouv_api_user: '%env(resolve:GOUV_API_USER)%'
+    gouv_api_key: '%env(resolve:GOUV_API_KEY)%'
+    test_plan_url: '%env(resolve:TEST_PLAN_URL)%'
+    virtual_office_url: '%env(resolve:VIRTUAL_OFFICE_URL)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:               # defines the scalar arguments once and apply them to any service defined/created in this file
+            string $locales: '%app_locales%'
+            string $defaultLocale: '%locale%'
+            string $emailSender: '%app.notifications.email_sender%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # when the service definition only contains arguments, you can omit the
+    # 'arguments' key and define the arguments just below the service class
+    App\EventSubscriber\CommentNotificationSubscriber:
+        $sender: '%app.notifications.email_sender%'
+
+    Symfony\Component\Security\Http\Logout\LogoutUrlGenerator: '@security.logout_url_generator'

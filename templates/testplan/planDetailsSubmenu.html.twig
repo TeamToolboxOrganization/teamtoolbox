@@ -1,0 +1,25 @@
+{% if suite.hasChildren is defined %}
+<tr data-widget="expandable-table" aria-expanded="false">
+    <td>
+        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+        {{ suite.name }}
+    </td>
+</tr>
+<tr class="expandable-body d-none">
+    <td>
+        <div class="p-0" style="display: none;">
+            <table class="table table-hover">
+                <tbody>
+                {% for child in suite.children %}
+                    {% include 'testplan/planDetailsSubmenu.html.twig' with {'suite': child} %}
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </td>
+</tr>
+{% else %}
+<tr>
+    <td><a href="{{ path('get_tests_cases', {planId: planId, suiteId: suite.id}) }}">{{ suite.name }}</a></td>
+</tr>
+{% endif %}

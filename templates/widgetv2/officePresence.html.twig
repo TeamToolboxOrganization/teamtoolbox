@@ -1,0 +1,88 @@
+<template id="current_user_li">
+    <li data-userid={{ app.user.id }}>
+        {%  if app.user.picture is not empty %}
+            <img src="{{ asset('uploads/pictures/' ~ app.user.picture) }}" alt="{{ app.user.fullName }}" class="img-fluid rounded-circle img-thumbnail shadow-sm user-img">
+        {% else %}
+            <i class="fas fa-user fa-2x userListAdmin-img"></i>
+        {% endif %}
+        <a class="users-list-name" href="{{ path('collab_index', {userId: app.user.id}) }}">{{ app.user.fullName }}</a>
+        <span class="users-list-date"></span>
+    </li>
+</template>
+
+<div class="card card-info" id="OfficeCard" data-title="{{ 'tuto.dashboard.officecard.title'|trans }}" data-text="{{ 'tuto.dashboard.officecard.text'|trans }}">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-building"></i> Présents au bureau</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="tabs-wrapper tabs-no-header">
+            <ul class="nav nav-tabs">
+                <div class="btn-group w-100 mb-2">
+                {% set isFirst = true %}
+                {% for dateForOffice, userList in officeByDate %}
+                    {% set currentDateString = dateForOffice|format_datetime(pattern="EEEE")|capitalize %}
+                    {% if currentDateString != "Samedi" and currentDateString != "Dimanche" %}
+                        <li data-target="tab-users{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}" class="btn btn-info {% if isFirst %}active{% endif %}" data-btn-tab="true"><a data-toggle="tab">{% if isFirst %} Aujourd'hui{% else %} {{ currentDateString }}{% endif %}</a></li>
+                        {% set isFirst = false %}
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </ul>
+            <div class="tab-content tab-content-body clearfix">
+                {% set isFirst = true %}
+                {% for dateForOffice, userList in officeByDate %}
+                    {% set currentDateString = dateForOffice|format_datetime(pattern="EEEE")|capitalize %}
+                    {% if currentDateString != "Samedi" and currentDateString != "Dimanche" %}
+                    <div class="tab-pane fade{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }} {% if isFirst %}active in{% endif %}" id="tab-users{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}">
+                        <ul class="users-list clearfix" data-date="{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}">
+                            {% if userList is not empty %}
+                            {% for userPresence in userList %}
+                                {% if userPresence is not empty %}
+                                {% set userAtOffice = userPresence[0] %}
+                                {% set amPm = userPresence[1] %}
+                                {% if amPm == 1 %}
+                                    {% set amPmText = " Matin" %}
+                                {% elseif amPm == 2 %}
+                                    {% set amPmText = " Aprem" %}
+                                {% else %}
+                                    {% set amPmText = "" %}
+                                {% endif %}
+                                <li data-userid={{ userAtOffice.id }}>
+                                    {%  if userAtOffice.picture is not empty %}
+                                        <img src="{{ asset('uploads/pictures/' ~ userAtOffice.picture) }}" alt="{{ userAtOffice.fullName }}" class="img-fluid rounded-circle img-thumbnail shadow-sm user-img">
+                                    {% else %}
+                                        <i class="fas fa-user fa-2x userListAdmin-img"></i>
+                                    {% endif %}
+                                    <a class="users-list-name" href="{{ path('collab_index', {userId: userAtOffice.id}) }}">{{ userAtOffice.fullName }}</a>
+                                    <span class="users-list-date">{{ amPmText }}</span>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                        </ul>
+                        <a data-date="{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}" data-type="office" class="btn btn-primary pull-right">Venir ce jour</a>
+                        <a href="{{ path('desk_view')}}" class="btn btn-primary pull-right">
+                            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Plan des bureaux
+                        </a>
+                    </div>
+                    {% set isFirst = false %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <!--<div class="card-footer text-center">
+        <a href="javascript:">View All Users</a>
+    </div>-->
+
+</div>

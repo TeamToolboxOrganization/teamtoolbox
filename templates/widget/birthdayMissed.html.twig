@@ -1,0 +1,5 @@
+{%  if "now"|date('D') == 'Mon' %}
+    {% for missedBirthday in missedBirthdays %}
+        <template name="notification" data-title="Anniversaire 🎂" data-body="Ce week-end, c'était l'anniversaire de {{ missedBirthday.full_name }}"></template>
+    {% endfor %}
+{% endif %}

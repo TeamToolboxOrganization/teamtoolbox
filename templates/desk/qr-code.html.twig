@@ -1,0 +1,16 @@
+{% extends 'basev2.html.twig' %}
+{% block title %}
+	QRCode
+{% endblock %}
+{% block contextual_menu %}
+	<li class="nav-item d-none d-sm-inline-block">
+		<a href="{{ path('desk_list')}}" class="nav-link"><i class="fa-solid fa-list-ol"></i> Retour à la liste</a>
+	</li>
+{% endblock %}
+{% block body %}
+	<div class="text-center">
+		<h1 class="text-center main_text_color">Desk : {{ title }}</h1>
+		<img src="{{ qrcode }}" alt=""/>
+		<p><a href="{{ url }}" class="d-print-none">{{ url }}</a><span class="d-none d-print-block">{{ url }}</span></p>
+	</div>
+{% endblock %}

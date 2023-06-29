@@ -1,0 +1,117 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'objectives_index' %}
+
+{% block title %}Objectifs{% endblock %}
+
+{% block current_page_name %}
+    Objectifs
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Les thèmes d'objectifs</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+{% endblock %}
+
+{% block body %}
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Objectifs</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped projects">
+            <thead>
+            <tr>
+                <th style="width: 20%">
+                    Projet
+                </th>
+                <th style="width: 30%">
+                    Membres
+                </th>
+                <th>
+                    Avancement
+                </th>
+                <th style="width: 8%" class="text-center">
+                    Status
+                </th>
+                <th style="width: 20%">
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for objectiveTheme in objectiveThemes %}
+                <tr data-idobjective="{{ objectiveTheme.id }}">
+                    <td>
+                        <a>
+                            {{ objectiveTheme.title }}
+                        </a>
+                        <br>
+                        <small>
+                            {{ objectiveTheme.description }}
+                        </small>
+                    </td>
+                    <td>
+                        <ul class="list-inline">
+                            {% for user in objectiveTheme.users %}
+                                {% if user is not null and user is defined %}
+                                    <li class="list-inline-item">
+                                        {%  if user.picture is not empty and user.sharedata %}
+                                            <img src="{{ asset('uploads/pictures/' ~ user.picture) }}" alt="{{ user.fullName }}" class="table-avatar">
+                                        {% else %}
+                                            <i class="fas fa-user fa-1x table-avatar"></i>
+                                        {% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td class="project_progress">
+                        {% if objectiveTheme.progress is not empty %}
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{ objectiveTheme.progress }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ objectiveTheme.progress }}%">
+                                </div>
+                            </div>
+                            <small>
+                                {{ objectiveTheme.progress }}%
+                            </small>
+                        {% endif %}
+                    </td>
+                    <td class="project-state">
+                        {#
+                        <span class="badge badge-success">Success</span>
+                        #}
+                    </td>
+                    <td class="project-actions text-right">
+                        {# <a class="btn btn-primary btn-sm" href="#">
+                            <i class="fas fa-folder">
+                            </i>
+                            View
+                        </a>
+                        <a class="btn btn-info btn-sm" href="#">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                            <i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </a> #}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

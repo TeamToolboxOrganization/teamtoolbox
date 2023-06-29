@@ -1,0 +1,265 @@
+@import 'colors';
+
+/////////////////////////////////////////////////////// Widget for planified hours
+
+.col{
+  text-align:center;
+  margin: 20px;
+}
+
+.doughnut{
+  width:250px;
+  height:250px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom:10px;
+}
+
+.loader{
+  width:150px;
+  height:150px;
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  animation:spin 2s linear infinite;
+  justify-items:center;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.loading{
+  width:50px;
+  height:50px;
+  border: 10px solid #f3f3f3;
+  border-top: 10px solid #3498db;
+  border-radius: 50%;
+  animation:spin 2s linear infinite;
+  justify-items:center;
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  display: none
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+#weekButton{
+  margin-top: 5px;
+}
+
+#monthButton{
+  margin-top: 5px;
+}
+
+
+/////////////////////////////////////////////////////// Widget for birthdays list
+
+.hori-timeline .events {
+  border-top: 3px solid #e9ecef;
+}
+.hori-timeline .events .event-list {
+  display: block;
+  position: relative;
+  text-align: center;
+  padding-top: 70px;
+  margin-right: 0;
+}
+.hori-timeline .events .event-list:before {
+  content: "";
+  position: absolute;
+  height: 36px;
+  border-right: 2px dashed #dee2e6;
+  top: 0;
+}
+.hori-timeline .events .event-list .event-date {
+  position: absolute;
+  top: 38px;
+  left: 0;
+  right: 0;
+  width: 75px;
+  margin: 0 auto;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+@media (min-width: 1140px) {
+  .hori-timeline .events .event-list {
+    display: inline-block;
+    width: 24%;
+    padding-top: 45px;
+  }
+  .hori-timeline .events .event-list .event-date {
+    top: -12px;
+  }
+}
+.bg-soft-primary {
+  background-color: rgba(64,144,203,.3)!important;
+}
+.bg-soft-success {
+  background-color: rgba(71,189,154,.3)!important;
+}
+.bg-soft-danger {
+  background-color: rgba(231,76,94,.3)!important;
+}
+.bg-soft-warning {
+  background-color: rgba(249,213,112,.3)!important;
+}
+.card {
+  border: none;
+  -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+  box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+}
+
+
+/////////////////////////////////////////////////////// Widget for office presence
+
+.widget-products li>a:after {
+  content: "\f138";
+  font-family: FontAwesome;
+  font-size: 0.875em;
+  font-style: normal;
+  font-weight: normal;
+  margin-top: 32px;
+  position: absolute;
+  right: 10px;
+  text-decoration: inherit;
+  top: 0;
+  color: #cccccc;
+  font-size: 1.3em;
+}
+.btn-success {
+  background-color: #2ecc71;
+  border-color: #27ae60;
+}
+.btn {
+  border: none;
+  padding: 6px 12px;
+  //border-bottom: 4px solid;
+  -webkit-transition: border-color 0.1s ease-in-out 0s,background-color 0.1s ease-in-out 0s;
+  transition: border-color 0.1s ease-in-out 0s,background-color 0.1s ease-in-out 0s;
+  outline: none;
+}
+.checkbox-nice label {
+  padding-top: 3px;
+}
+label {
+  font-weight: 400;
+  font-size: 0.875em;
+}
+.checkbox-nice input[type=checkbox] {
+  visibility: hidden;
+}
+.checkbox-nice {
+  position: relative;
+  padding-left: 15px;
+}
+.widget-users li {
+  border-bottom: 1px solid #ebebeb;
+  padding: 15px 0;
+}
+.label {
+  border-radius: 3px;
+  font-size: 0.875em;
+  font-weight: 600;
+}
+.widget-users li>.details>.time {
+  color: #3498db;
+  font-size: 0.75em;
+  padding-bottom: 7px;
+}
+.widget-users li>.details>.name>a {
+  color: #344644;
+}
+.widget-users li>.details>.name {
+  font-weight: 600;
+}
+.widget-users li>.details {
+  margin-left: 60px;
+}
+.widget-users li>.img {
+  float: left;
+  margin-top: 8px;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.widget-users {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tabs-wrapper.tabs-no-header .tab-content {
+  padding: 0 20px 20px;
+}
+.nav-tabs>li>a {
+  border-radius: 0;
+  font-size: 1.125em;
+  font-weight: 300;
+  outline: none;
+  color: #555;
+  margin-right: 3px;
+}
+.nav>li {
+  float: left;
+}
+.tabs-wrapper .nav-tabs {
+  margin-bottom: 15px;
+}
+
+.nav-tabs {
+  background: $main_color;
+  color: $main_color_text;
+  border-color: transparent;
+  -moz-border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+
+.nav-tabs>li:hover {
+  color: #000;
+  background-color: $third_color;
+  border-color: $third_color;
+}
+
+.main-box {
+  background: #FFFFFF;
+  -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
+  -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
+  -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
+  -ms-box-shadow: 1px 1px 2px 0 #CCCCCC;
+  box-shadow: 1px 1px 2px 0 #CCCCCC;
+  margin-bottom: 16px;
+  -webikt-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+
+.embera-embed-responsive {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  padding-bottom: 50%;
+}
+
+.embera-embed-responsive-item {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}

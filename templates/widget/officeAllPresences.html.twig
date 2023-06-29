@@ -1,0 +1,45 @@
+<div class="row text-center">
+    <div class="col-sm-12">
+        <div class="row">
+            {% set weekDays = [] %}
+            {% set weekDaysDates = [] %}
+            {% set currentDate = "now" %}
+            {% for i in 0..6 %}
+                {% set currentDateString = currentDate|date_modify('+' ~ i ~ ' day')|format_datetime(pattern="EEEE")|capitalize %}
+                {% if currentDateString != "Samedi" and currentDateString != "Dimanche" %}
+                    {% set weekDays = weekDays|merge([currentDateString]) %}
+                    {% set weekDaysDates = weekDaysDates|merge([currentDate|date_modify('+' ~ i ~ ' day')|format_datetime(pattern="Y-MM-dd")]) %}
+                {% endif %}
+            {% endfor%}
+
+            {% set isToday = true %}
+            {% set iterator = 0 %}
+            {% for weekDay in weekDays %}
+                {% set todayPresences = [] %}
+                {% for weekOfficeDate in officeDates %}
+                    {% set currentDate = weekOfficeDate.startAt|format_datetime(pattern="EEEE")|capitalize %}
+                    {% if currentDate == weekDay %}
+                        {% set todayPresences = todayPresences|merge([weekOfficeDate]) %}
+                    {% endif %}
+                {% endfor %}
+
+                <!-- Team item -->
+                <div class="col-xl-2 col-sm-3 mb-5">
+                    <div name='office' data-date="{{ weekDaysDates[iterator] }}" class="{% if todayPresences is not empty %}officeColor{% else %}bg-light{% endif %} rounded shadow-sm py-5 px-4">
+                        <h5 class="mb-0">{% if isToday %}Aujourd'hui{% else %}{{ weekDay }}{% endif%} :</h5>
+                         <ul data-date="{{ weekDaysDates[iterator] }}">
+                             {% if todayPresences is not empty %}
+                                {% for todayPresence in todayPresences %}
+                                    {% if todayPresence.amPm == 1 %}{% set amPm = " (Matin)" %}{% elseif todayPresence.amPm == 2 %}{% set amPm = " (Aprem)" %}{% else %}{% set amPm = "" %}{% endif %}
+                                   <li data-userid={{ todayPresence.collab.id }}> {{ todayPresence.collab.fullName }} {{ amPm }}</li>
+                                {% endfor %}
+                             {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                {% set isToday = false %}
+                {% set iterator = iterator+1 %}
+            {% endfor %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+{% extends 'basev2.html.twig' %}
+
+{% block contentHeader %}{% endblock %}
+
+{% block title %}Guess who ?{% endblock %}
+
+{% block body %}
+    <section class="content-header">
+        <div class="container-fluid">
+            {# <h2 class="text-center display-4">Search</h2> #}
+        </div>
+    </section>
+
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    {{ form_start(form) }}
+                        <div class="input-group input-group-lg">
+                            {{ form_widget(form.criteria, { 'attr': {'class': 'form-control form-control-lg','placeholder': 'Guess Who ?' } }) }}
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-10 offset-md-1">
+                    <div class="list-group">
+
+                        {% for project in projects %}
+                        <div class="list-group-item">
+                            <div class="row">
+                                {# <div class="col-auto">
+                                    <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo" style="max-height: 160px;">
+                                </div> #}
+                                <div class="col px-4">
+                                    <div>
+                                        <div class="float-right">2021-04-20 10:14pm</div>
+                                        <h3><a href="{{ path('project_details', {id: project.id})}}">{{ project.name }}</a></h3>
+                                        <p class="mb-0">{{ project.comment }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% include 'widget/usersList.html.twig' with {'showTitle': false, 'users': project.users} %}
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

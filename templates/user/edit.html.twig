@@ -1,0 +1,66 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'user_edit' %}
+
+{% block title %}Compte {% endblock %}
+
+{% block current_page_name %}
+    {% if user.id is not null %}
+        {{ user.fullName }}
+    {% else %}
+        Edition d'utilisateur
+    {% endif %}
+{% endblock %}
+
+{% block contentHeaderTitle %}
+    {% if user.id is not null %}
+        <h1 class="m-0">{{ user.fullName }}</h1>
+    {% else %}
+        <h1 class="m-0">Edition d'utilisateur</h1>
+    {% endif %}
+{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('user_list_admin') }}" class="nav-link"><i class="fas fa-users-cog"></i> Retour à la liste</a>
+        </li>
+    {% endif %}
+        {% if user.id is not null %}
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ path('user_change_password') }}" class="nav-link"><i class="fa fa-lock"></i> {{ 'mettre_jour_le_mot_de_passe'|trans({}, 'messages') }}</a>
+            </li>
+        {% if is_granted('ROLE_ADMIN') and user.id != 1 %}
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ path('user_delete', {userId: user.id}) }}" class="nav-link text-danger"><i class="fas fa-trash-alt"></i> Supprimer l'utilisateur</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="top: -8px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    <div class="container main_text_color">
+        {% if user.id is not null %}
+            <h1>{{ 'title.edit_user'|trans }}</h1>
+        {% else %}
+            <h1>Edition d'utilisateur</h1>
+        {% endif %}
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save" aria-hidden="true"></i> {{ 'action.save'|trans }}
+            </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

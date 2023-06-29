@@ -1,0 +1,36 @@
+{% extends 'basev2.html.twig' %}
+{% block title %}
+    Détails du projet
+{% endblock %}
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('project_list')}}" class="nav-link"><i class="fa-solid fa-map-location-dot"></i> Liste des projets</a>
+    </li>
+{% endblock %}
+{% block body %}
+
+    <div class="container main_text_color">
+        <h1>{{ project.name }}</h1>
+        <h3>{{ project.comment }}</h3>
+        <h3>
+            Produits :
+
+        </h3>
+        <table class="table table-borderless main_text_color">
+            <thead>
+            <tr>
+                <th scope="col">Contacts</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td class="center-item-table"><a href="{{ path('collab_index', {userId: user.id}) }}">{{ user.fullname }}</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+

@@ -1,0 +1,34 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'form_xlsx' %}
+
+{% block contextual_menu %}
+{% endblock %}
+
+{% block title %}
+    Pointages
+{% endblock %}
+
+{% block current_page_name %}
+    Pointages
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Pointages 7Pace</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block body %}
+    <h1>{{ "text.export"|trans }}</h1>
+    <h4>{{ "text.info0.export"|trans }}</h4><li>{{ "text.info1.export"|trans }}</li><li>{{ "text.info2.export"|trans }}</li>
+    {{ form_start(exportForm) }}
+    {{ form_label(exportForm.workActivity, "label.workActivity.export"|trans) }}
+    {{ form_widget(exportForm.workActivity) }}
+    {{ form_label(exportForm.workItem, "label.workItem.export"|trans) }}
+    {{ form_widget(exportForm.workItem) }}
+    {{ form_label(exportForm.startDate, "label.startDate.export"|trans) }}
+    {{ form_widget(exportForm.startDate) }}
+    {{ form_label(exportForm.endDate, "label.endDate.export"|trans) }}
+    {{ form_widget(exportForm.endDate) }}
+    <br>
+    <button type="submit" class="btn btn-primary" href = "../../calendar/DLxls">{{ "button.export"|trans }}</button>
+    {{ form_end(exportForm) }}
+{% endblock %}

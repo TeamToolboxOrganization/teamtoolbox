@@ -1,0 +1,86 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Liste des categories{% endblock %}
+
+{% block current_page_name %}
+    Liste des categories
+{% endblock %}
+
+{% block contextual_menu %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('category_new') }}" class="nav-link"><i class="fa-sharp fa-solid fa-chart-pie"></i> Créer une Catégorie</a>
+    </li>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('custom_color') }}
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('page_categoriesList') }}
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Personnalisation utilisateur</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block body_id 'category_list' %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+            <button type="button" class="close userListCategories-close-alert-btn" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <div class="table-responsive table-borderless">
+                        <table class="table category-list ">
+                            <thead>
+                            <tr class="main_text_color">
+                                <th scope="col">Nom</th>
+                                <th scope="col">Couleur personnalisée</th>
+                                <th scope="col">Couleur par défaut</th>
+                                {% if is_granted('ROLE_ADMIN') %}<th class="mobile-hide" scope="col">&nbsp;</th>{% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for categoryId, category in categories %}
+                                <tr categoryId="{{ categoryId }}">
+                                    <td class="categories-name">
+                                        {{ category[0] }}
+                                    </td>
+                                    <td class="categories-color-box">
+                                        <input id={{ categoryId }} name="colors" type="color" class="categories-color" value={{ category[1] }} >
+                                        <div class="loading" ></div>
+                                    </td>
+                                    <td class="categories-color-box">
+                                        <input type="color" class="categories-color" value={{ defaultColor[categoryId] }} disabled=true>
+                                    </td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                    <td class="mobile-hide">
+                                        <a href="{{ path('edit_category', {categoryId: categoryId}) }}">
+                                            <button type="button" class="btn btn-primary" name="show" value="{{ categoryId }}">
+                                                <i class="fas fa-edit" aria-hidden="true"></i>
+                                           </button>
+                                        </a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

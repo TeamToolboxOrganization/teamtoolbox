@@ -1,0 +1,60 @@
+<div class="card card-info" id="BirthdayCard" data-title="{{ 'tuto.dashboard.birthdaycard.title'|trans }}" data-text="{{ 'tuto.dashboard.birthdaycard.text'|trans }}">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fas fa-gift"></i> Prochains anniversaires</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="container" style="width: auto;">
+            {% if title is not defined %}{% set title = 'Prochains anniversaires' %}{% endif %}
+            {% if icon is not defined %}{% set icon = 'fas fa-gift' %}{% endif %}
+            {% if iconColor is not defined %}{% set iconColor = 'text-primary' %}{% endif %}
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title mb-5"></h4>
+                            <div class="hori-timeline" dir="ltr">
+                                <ul class="list-inline events">
+                                    {% for nextBirthday,users in nextBirthdays %}
+                                        {% set i = 0 %}
+                                        {% set days_remaining = 0 %}
+                                        <li class="list-inline-item event-list">
+                                            <div class="px-4">
+                                                <div class="event-date bg-soft-primary text-primary">{{ nextBirthday }}</div>
+                                                {% for id,user in users %}
+                                                    {%  if user.days_remaining == 1 %}
+                                                        {% set i = 1 %}
+                                                        <h5 class="font-size-16"><a href="{{ path('collab_index', {userId: id}) }}">{{ user.full_name }}</a></h5>
+                                                    {% else %}
+                                                        {% set i = 0 %}
+                                                        {% set days_remaining = user.days_remaining %}
+                                                        <h5 class="font-size-16"><a href="{{ path('collab_index', {userId: id}) }}">{{ user.full_name }}</a></h5>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                {% if i == 1  %}
+                                                    <p class="text-muted">Bon anniversaire ! 🎂</p>
+                                                {% else %}
+                                                    <p class="text-muted">Dans {{ days_remaining }} jours </p>
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

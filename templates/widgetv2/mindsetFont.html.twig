@@ -1,0 +1,8 @@
+{% if value is not defined or value is empty %}
+{% elseif value <= 4 %}
+    <i class="fas fa-cloud-showers-heavy bg-danger" title="{{ value }}"></i>
+{% elseif value > 4 and value < 7 %}
+    <i class="fas fa-cloud bg-warning" title="{{ value }}"></i>
+{% elseif value >= 7 %}
+    <i class="fas fa-sun bg-success" title="{{ value }}"></i>
+{% endif %}

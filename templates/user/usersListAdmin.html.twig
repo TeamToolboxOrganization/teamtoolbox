@@ -1,0 +1,85 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block current_page_name %}
+    Liste des utilisateurs
+{% endblock %}
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('user_new') }}" class="nav-link"><i class="fas fa-user-plus"></i> Créer un utilisateur</a>
+    </li>
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('page_userListAdmin') }}
+{% endblock %}
+
+{% block body_id 'user_list' %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Gestion des utilisateurs</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+            <button type="button" class="close userListAdmin-close-alert-btn" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Utilisateurs</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive table-borderless">
+                <table class="table user-list ">
+                    <thead>
+                    <tr class="main_text_color">
+                        <th scope="col">Nom</th>
+                        <th class="mobile-hide" scope="col">Mail</th>
+                        <th scope="col">Squad</th>
+                        <th scope="col">Manager</th>
+                        {% if is_granted('ROLE_MANAGER') %}<th class="mobile-hide" scope="col">&nbsp;</th>{% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr userid="{{ user.id  }}">
+                            <td>
+                                {%  if user.picture is not empty %}
+                                    <img src="{{ asset('uploads/pictures/' ~ user.picture) }}" alt="{{ user.fullName }}" class="img-fluid rounded-circle img-thumbnail shadow-sm userListAdmin-img">
+                                {% else %}
+                                    <i class="fas fa-user fa-2x userListAdmin-img"></i>
+                                {% endif %}
+
+                                <a href="{{ path('collab_index', {userId: user.id}) }}" class="user-link">{{ user.fullName }}</a>
+                                <span class="user-subhead">{{ user.roles[0] }}</span>
+                            </td>
+                            <td class="mobile-hide">
+                                {% if user.email is not empty %}<a href="mailto:{{ user.email }}">{{ user.email }}</a>{% endif %}
+                            </td>
+                            <td>{% if user.squad is not empty %} <a href="{{ path('squad_index', {squadId: user.squad.id}) }}">{{ user.squad.name  }}</a>{% endif %}</td>
+                            <td>{% if user.manager is not empty %} <a href="{{ path('collab_index', {userId: user.manager.id}) }}">{{ user.manager.fullName }} </a>{% endif %}</td>
+                            {% if is_granted('ROLE_MANAGER') %}<td class="mobile-hide"><a href="{{ path('user_edit_him', {userId: user.id}) }}"><button type="button" class="btn btn-primary" name="show" value="{{ user.id  }}"><i class="fas fa-edit" aria-hidden="true"></i></button></a></td>{% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

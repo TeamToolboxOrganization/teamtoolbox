@@ -1,0 +1,34 @@
+<div class="container">
+    {% if showTitle is defined and showTitle %}
+        {% include 'widget/titleSection.html.twig' with {'icon': 'fas fa-bug', 'iconColor': 'text-danger', 'title': 'Tickets Jira en cours'} %}
+    {% endif %}
+
+    <div class="row">
+        <div class="col-sm-11">
+        {% if jiraResults.body is not empty %}
+            {% if jiraResults.body.issues is not empty %}
+                {% for issue in jiraResults.body.issues %}
+                    <div class="row bg-white">
+                        <div class="col-sm-1">
+                            <img src="{{ issue.fields.issuetype.iconUrl }}" title="{{ issue.fields.issuetype.name }}" >
+                        </div>
+                        <div class="col-sm-2">
+                            {{ issue.fields.status.name }}
+                        </div>
+                        <div class="col-sm-2">
+                            {{ issue.key }}
+                        </div>
+                        <div class="col-sm-7">
+                            <a href="https://xxxxxxxx.atlassian.net/browse/{{ issue.key }}">
+                                {{ issue.fields.summary }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                Aucun ticket en cours
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+</div>

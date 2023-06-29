@@ -1,0 +1,14 @@
+{% if nextMep is not empty and nextMep.state != 'Validé'%}
+    <div class="alert mepColorToValidate" role="alert">
+        <i class="far fa-bell"></i> Attention, la prochaine <a href="{{ path('mep_index') }}">mise en prod du {{ nextMep.start_at|format_datetime(pattern="dd/MM") }} (dans {{ nextMep.days_remaining }} jours)</a> n'a pas été confirmée.
+        {% if nextMep.full_name is not empty %}
+            Voir avec {{ nextMep.full_name }} s'il peut bien être présent.
+        {% else %}
+            Il faut trouver un volontaire.
+        {% endif %}
+        <template name="notification" data-title="⛔ MEP" data-body="Attention, la prochaine mise en prod du {{ nextMep.start_at|format_datetime(pattern="dd/MM") }} (dans {{ nextMep.days_remaining }} jours) n'a pas été confirmée."></template>
+        <button type="button" class="close alert-close-alert-btn" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}

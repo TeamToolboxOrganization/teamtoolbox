@@ -1,0 +1,24 @@
+<div class="container objectiveTheme-width-auto">
+    {% if showTitle is defined and showTitle %}
+        {% include 'widget/titleSection.html.twig' with {'icon': 'fa-solid fa-handshake-angle', 'iconColor': 'text-info', 'title': 'Projets'} %}
+    {% endif %}
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <div class="row">
+                {% for project in projects %}
+                    <!-- Team item -->
+                    <div class="col-xl-3 col-sm-3 mb-5">
+                        <div class="bg-light rounded shadow-sm py-5 px-4">
+                            <h5 class="mb-0" title="{{ project.id }}"><a href="{{ path('project_details', {id: project.id}) }}"> {{ project.name }}</a>
+                               
+                            </h5>
+                            <span class="small text-muted">{{ project.comment }}</span>
+
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

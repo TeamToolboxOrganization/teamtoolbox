@@ -1,0 +1,52 @@
+<div class="card card-widget widget-user">
+
+    <div class="widget-user-header bg-info">
+        <h3 class="widget-user-username">{{ collab.fullName }}</h3>
+        <h5 class="widget-user-desc">
+            {{ collab.email }}
+        </h5>
+    </div>
+    <div class="widget-user-image">
+        {%  if collab.picture is not empty and collab.sharedata %}
+            <img src="{{ asset('uploads/pictures/' ~ collab.picture) }}" alt="{{ collab.fullName }}" class="img-circle elevation-2">
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <div class="row">
+            <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header">Anniversaire</h5>
+                    <span class="description-text">
+                        {%  if collab.birthday is not empty and collab.sharedata %}
+                            <h4>{{ collab.birthday|format_datetime('short', 'none', '', 'UTC') }}</h4>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="description-block">
+                    <h5 class="description-header">Squad</h5>
+                    <span class="description-text">
+                        {% if collab.squad is not empty %}
+                            <a href="{{ path('squad_index', {squadId: collab.squad.id}) }}"><h4>{{ collab.squad.name }}</h4></a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-sm-4 border-right">
+                <div class="description-block">
+                    <h5 class="description-header">Manager</h5>
+                    <span class="description-text">
+                        {% if collab.manager is not empty %}
+                            <a href="{{ path('collab_index', {userId: collab.manager.id}) }}"> <h4>{{ collab.manager.fullName }}</h4></a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

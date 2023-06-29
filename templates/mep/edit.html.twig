@@ -1,0 +1,44 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Edition MEP{% endblock %}
+
+{% block current_page_name %}
+{% if mep.id is not null %}Edition MEP{% else %}Nouvelle MEP{% endif %}
+{% endblock %}
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('mep_index') }}" class="nav-link"><i class="fas fa-tasks"></i> Revenir à la liste</a>
+    </li>
+    {% if mep.id is not null %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('mep_delete_interactive', {mepId: mep.id}) }}" class="nav-link text-danger"><i class="fas fa-trash-alt"></i> Supprimer la MEP</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block body_id 'mep_new' %}
+
+{% block contentHeaderTitle %}
+    <h1 class="m-0">{% if mep.id is not null %}Editer la MEP{% else %}Saisir une nouvelle MEP{% endif %}</h1>
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block body %}
+    <div class="container main_text_color">
+
+        {{ form_start(form) }}
+            {{ form_row(form.version) }}
+            {{ form_row(form.collab) }}
+            {{ form_row(form.comment) }}
+            {{ form_row(form.state) }}
+            {{ form_row(form.startAt) }}
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save" aria-hidden="true"></i> {% if mep.id is not null %}Mise à jour{% else %}Créer la nouvelle MEP{% endif %}
+            </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,17 @@
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
+@import "~jquery-ui-dist/jquery-ui.min.css";
+
+@import "~admin-lte/dist/css/adminlte.min.css";
+
+@import "~leaflet/dist/leaflet.css";
+
+#map {
+  width: 100%;
+  min-height: 70vh;
+}
+
+.user-img {
+  max-width:128px;
+  max-height:120px
+}

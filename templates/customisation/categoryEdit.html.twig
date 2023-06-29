@@ -1,0 +1,47 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'user_edit' %}
+
+{% block title %}Catégorie{% endblock %}
+
+{% block current_page_name %}
+    Edition de la catégorie
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Edition de la catégorie</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('user_customisation') }}" class="nav-link"><i class="fa-sharp fa-solid fa-chart-pie"></i> Retour à la liste</a>
+        </li>
+    {% endif %}
+    {% if category.id is not null %}
+        {% if is_granted('ROLE_ADMIN')%}
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="{{ path('category_delete', {categoryId: category.id}) }}" class="nav-link text-danger"><i class="fas fa-trash-alt"></i> Supprimer la catégorie</a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="top: -8px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+    <div class="container main_text_color">
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save" aria-hidden="true"></i> {{ 'action.save'|trans }}
+            </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

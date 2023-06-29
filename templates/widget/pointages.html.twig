@@ -1,0 +1,35 @@
+<div class="row main_text_color">
+    <div class="table-responsive">
+        {% for day,categories in days %}
+        {{ day }}
+        <table class="table table-hover main_text_color">
+            <thead>
+            <tr>
+                <th>{{ 'catgories'|trans }}</th>
+                <th>{{ 'dure'|trans({}, 'messages') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for category,duration in categories %}
+                    <tr>
+                        <td>
+                            <span class="badge meeting-category-{{ category|lower[0:2] }}">{{ category }}</span>
+                        </td>
+                        {% set nbDays = (duration | date("%d")) %}
+                        {% if nbDays == 0 %}
+                            {% set nbHours = (duration | date("%H")) %}
+                            {% if nbHours == 0 %}
+                                <td>{{ duration | date("%I min") }}</td>
+                            {% else %}
+                                <td>{{ duration | date("%H h %I") }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td>{{ nbDays }} {{ 'jours'|trans({}, 'messages') }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endfor %}
+    </div>
+</div>

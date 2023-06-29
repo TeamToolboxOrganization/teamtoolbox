@@ -1,0 +1,31 @@
+<div class="row text-center">
+    <div class="col-sm-12">
+        <div class="row">
+            {% for mepDate in mepDates %}
+                <!-- Team item -->
+                <div class="col-xs-6 col-sm-6 col-md-3 mb-5">
+                    <div class="jumbotron text-secondary {% if mepDate.state == "Validé" %}mepColor{% else %}mepColorToValidate{% endif%}" name='mep' data-value="{{ mepDate.id  }}">
+                        {% if mepDate.full_name is defined %}
+                            {% if mepDate.days_remaining == 0 %}
+                                Aujourd'hui :
+                            {% else %}
+                                <div>Dans {{ mepDate.days_remaining }} jours :</div>
+                            {% endif %}
+                            {{ mepDate.full_name }}<br/>
+                            ({{ mepDate.start_at|format_datetime(pattern="dd/MM") }})<br/>
+                        {% else %}
+                            {% if mepDate.days_remaining == 0 %}
+                                Aujourd'hui
+                            {% else %}
+                                {{ mepDate.start_at|format_datetime(pattern="dd/MM") }} ({{ mepDate.days_remaining }} jours restants)
+                            {% endif %}
+                        {% endif %}
+                        <div mepid="{{ mepDate.id  }}">
+                            {{ mepDate.state }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

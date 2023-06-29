@@ -1,0 +1,55 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title"><i class="fa-regular fa-handshake"></i> {% if title is defined %}{{ title }}{% else %}Créneaux O3{% endif %}</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive table-borderless">
+            <table class="table user-list ">
+                <thead>
+                <tr class="main_text_color">
+                    <th scope="col">Début</th>
+                    <th>Réservation</th>
+                    <th scope="col">Collab</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for o3 in o3List %}
+                    <tr o3id="{{ o3.id  }}">
+                        <td>{{ o3.startAt|format_datetime('short', 'none', '', 'UTC') }} {{ o3.startAt|format_datetime('none', 'short', locale='fr') }}</td>
+                        <td>
+                            {% if o3.collaborator is not empty %}
+                                {% if o3.collaborator.id == app.user.id %}
+                                    <a href="{{ path('booking_03_slot', {idO3: o3.id} ) }}"><span class="badge badge-danger">Annuler</span></a>
+                                {% else %}
+                                    <span class="badge badge-success">Réservé</span>
+                                {% endif %}
+                            {% else %}
+                                {% if manager.id is defined and manager.id == app.user.id or o3.collab.id == app.user.id %}
+                                    <span class="badge badge-primary">Libre</span>
+                                {% else %}
+                                    <a href="{{ path('booking_03_slot', {idO3: o3.id} ) }}"><span class="badge badge-primary">Réserver</span></a>
+                                {% endif %}
+
+                            {% endif %}
+                        </td>
+                        <td>{% if o3.collaborator is not empty %} <a href="{{ path('collab_index', {userId: o3.collaborator.id}) }}">{{ o3.collaborator.fullName }} </a>{% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if manager is defined and manager is not null %}
+        <div class="card-footer clearfix">
+            <button type="button" class="btn btn-primary float-right" onclick="window.location.href='{{ path('o3_list', {idManager: manager.id})}}';"><i class="fas fa-plus"></i> Réserver un nouveau O3</button>
+        </div>
+    {% endif %}
+</div>

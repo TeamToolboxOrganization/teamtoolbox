@@ -1,0 +1,26 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'squad_add_user' %}
+
+{% block title %}Ajout d'un utilisateur{% endblock %}
+
+{% block current_page_name %}
+    Ajout d'un utilisateur
+{% endblock %}
+
+{% block contextual_menu %}
+    {% if is_granted('ROLE_MANAGER') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('squad_index', {squadId: squad.id}) }}" class="nav-link"><i class="fas fa-user-friends"></i> Retour à la Squad</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="container main_text_color">
+        <h1>Ajout d'un utilisateur à la squad {{ squad.name }}</h1>
+        {% for user in users %}
+            <div>{{ user.fullName }}</div>
+        {% endfor %}
+    </div>
+{% endblock %}

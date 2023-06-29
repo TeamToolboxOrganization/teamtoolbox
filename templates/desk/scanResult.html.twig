@@ -1,0 +1,15 @@
+{% extends 'basev2.html.twig' %}
+{% block title %}
+	Scan QRCode
+{% endblock %}
+{% block contextual_menu %}{% endblock %}
+{% block body %}
+	<h1 class="text-center main_text_color">
+		{% if success %}
+		<i class="fa-regular fa-circle-check"></i>
+		{% else %}
+		<i class="fa-solid fa-circle-xmark"></i>
+		{% endif %}
+		{{ result }}
+	</h1>
+{% endblock %}

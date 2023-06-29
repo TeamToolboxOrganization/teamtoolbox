@@ -1,0 +1,100 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'gantt_index' %}
+
+{% block title %}
+    {% if viewType is defined and viewType == 'staffing' %}
+        Staffing
+    {% else %}
+        Réalisation
+    {% endif %}
+{% endblock %}
+
+{% block current_page_name %}
+    {% if viewType is defined and viewType == 'staffing' %}
+        {% if (is_granted('ROLE_LT') and not is_granted('ROLE_MANAGER')) or is_granted('ROLE_ADMIN') %}
+            {% if epic is not null %}
+                <a href="{{ path('gantt_index') }}?view=staffing"><i class="fas fa-exchange-alt" aria-hidden="true"></i> {{ epic.text }}</a>
+            {% else %}
+                 Staffing
+            {% endif %}
+        {% else %}
+            Staffing
+        {% endif %}
+    {% else %}
+        Consultation
+    {% endif %}
+{% endblock %}
+
+{% block contentHeader %}
+{% endblock %}
+
+{% block contextual_menu %}
+    {% if viewType is defined and viewType == 'staffing' %}
+        {% if (is_granted('ROLE_LT') and not is_granted('ROLE_MANAGER')) or is_granted('ROLE_ADMIN') %}
+            <div class="btn-group" style="padding-right: 10px;">
+                <button type="button" class="btn btn-info active"><i class="fab fa-jira"></i></button>
+                <button type="button" class="btn btn-primary" name="reload">Mise à jour</button>
+            </div>
+        {% endif %}
+    {% endif %}
+
+    <div class="btn-group" style="padding-right: 10px;">
+        <button type="button" class="btn btn-info active"><i class="fas fa-th-list"></i></button>
+        <button type="button" class="btn btn-primary" name="btnExpandAll"><i class="fas fa-indent"></i></button>
+        <button type="button" class="btn btn-primary" name="btnCollapseAll"><i class="fas fa-outdent"></i></button>
+    </div>
+
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="filters_wrapper" style="padding-right: 10px;">
+        <label class="btn btn-info active">
+            <i class="fas fa-filter"></i>
+        </label>
+        <label class="btn btn-primary active">
+            <input type="checkbox" id="squad0" name="N/A" value="N/A" checked/>N/A
+        </label>
+        <label class="btn btn-primary active">
+            <input type="checkbox" id="squad1" name="Squad1" value="Squad1" checked/>Squad 1
+        </label>
+        <label class="btn btn-primary active">
+            <input type="checkbox" id="squad2" name="Squad2" value="Squad2" checked/>Squad 2
+        </label>
+    </div>
+
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info active">
+            <i class="fas fa-calendar-alt"></i>
+        </label>
+        <button type="button" class="btn btn-primary" name="btnZoomIn"><i class="fas fa-search-plus"></i></button>
+
+        <label class="btn btn-primary">
+            <input type="radio" id="scale1" class="gantt_radio" name="scale" value="day">Jour
+        </label>
+        <label class="btn btn-primary {% if viewType is defined and viewType == 'staffing' %}active{% endif %}">
+            <input type="radio" id="scale2" class="gantt_radio" name="scale" value="week" {% if viewType is defined and viewType == 'staffing' %}checked{% endif %}>Semaine
+        </label>
+        <label class="btn btn-primary {% if viewType is defined and not viewType == 'staffing' %}active{% endif %}">
+            <input type="radio" id="scale4" class="gantt_radio" name="scale" value="quarter" {% if viewType is defined and not viewType == 'staffing' %}checked{% endif %}>Quarter
+        </label>
+        <label class="btn btn-primary">
+            <input type="radio" id="scale5" class="gantt_radio" name="scale" value="year">Année
+        </label>
+        <button type="button" class="btn btn-primary" name="btnZoomOut"><i class="fas fa-search-minus"></i></button>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+
+    <div id="gantt_container">
+        <div id="gantt_here" data-viewType="{{ viewType }}" {% if epic is not null %} data-epicId="{{ epic.id }}"{% endif%} style='width:100%; height:100%;'></div>
+    </div>
+
+    {% if viewType is defined and viewType == 'staffing' %}
+        {{ encore_entry_script_tags('gantt_staffing') }}
+        {{ encore_entry_link_tags('gantt_staffing') }}
+    {% else %}
+        {{ encore_entry_script_tags('gantt_view') }}
+        {{ encore_entry_link_tags('gantt_view') }}
+    {% endif %}
+
+{% endblock %}

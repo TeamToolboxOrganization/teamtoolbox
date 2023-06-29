@@ -1,0 +1,61 @@
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('outlook_calendar') }}
+{% endblock %}
+
+<div class="card card-danger">
+    <div class="card-header">
+        <h3 class="card-title"><i class="far fa-calendar nav-icon"></i> Mes réunions du jour</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive table-borderless">
+            <table class="table user-list ">
+                <thead>
+                <tr>
+                    <th>{{ 'catgories'|trans }}</th>
+                    <th>{{ 'organisateur'|trans({}, 'messages') }}</th>
+                    <th>{{ 'sujet'|trans({}, 'messages') }}</th>
+                    <th>{{ 'dbut_le'|trans({}, 'messages') }}</th>
+                    <th>{{ 'fin_le'|trans({}, 'messages') }}</th>
+                    <th>{{ 'dure'|trans({}, 'messages') }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>
+                            {% if event.categories is not null %}
+                                {% for category in event.categories %}
+                                    <span class="badge meeting-category-{{ category|lower[0:2] }}">{{ category }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                        <td>{{ event.organizer }}</td>
+                        <td>{{ event.subject }}</td>
+                        <td>{{ event.start|date("d/m/y H:i", "Europe/Paris") }}</td>
+                        <td>{{ event.end|date("H:i", "Europe/Paris") }}</td>
+                        {% set nbDays = (event.timeDiff | date("%d")) %}
+                        {% if nbDays == 0 %}
+                            {% set nbHours = (event.timeDiff | date("%H")) %}
+                            {% if nbHours == 0 %}
+                                <td>{{ event.timeDiff | date("%I min") }}</td>
+                            {% else %}
+                                <td>{{ event.timeDiff | date("%H h %I") }}</td>
+                            {% endif %}
+                        {% else %}
+                            <td>{{ nbDays }} {{ 'jours'|trans({}, 'messages') }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

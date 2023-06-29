@@ -1,0 +1,27 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'iframe_index' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block current_page_name %}
+    {{ title }}
+{% endblock %}
+
+{% block contextual_menu %}
+{% endblock %}
+
+{% block contentHeader %}{% endblock %}
+
+{% block body %}
+    <iframe id="inlineFrameExample"
+            title="{{ title }}"
+            width="100%"
+            height="1024"
+            allow="camera;microphone"
+            class="back-white"
+            src="{{ src }}">
+    </iframe>
+{% endblock %}

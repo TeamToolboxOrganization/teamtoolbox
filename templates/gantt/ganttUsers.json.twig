@@ -1,0 +1,10 @@
+[
+{% set i = 0 %}
+{% for user in allUsers %}{% set i = i+1 %}
+    {
+        "key":"{{ user.id }}",
+        "label":"{{ user.fullName }}"
+    }{% if i != allUsers|length %},{% endif %}
+
+{% endfor %}
+]

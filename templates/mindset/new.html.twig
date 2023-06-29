@@ -1,0 +1,39 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Mindset{% endblock %}
+
+{% block current_page_name %}
+Mindset
+{% endblock %}
+
+{% block contentHeaderTitle %}
+    <h1 class="m-0">Mindset</h1>
+{% endblock %}
+
+{% block contextual_menu %}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block body_id 'mindset_new' %}
+
+{% block body %}
+    <div class="container main_text_color">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <h1>Ajouter mindset</h1>
+
+        {{ form_start(form) }}
+            {{ form_row(form.value) }}
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save" aria-hidden="true"></i> Ajouter
+            </button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,28 @@
+<div class="container width-auto">
+    <div class="row">
+
+        <div class="mobile-hide col-sm-2">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Dernière météo</h4>
+                    <div class="fa-5x">
+                        {% include 'widget/mindset.html.twig' with {'value': lastMindset} %}
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h4>Tendance</h4>
+                    <div class="fa-5x">
+                        {% include 'widget/mindsetTendance.html.twig' with {'mindset': mindset} %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+            <h4 class="mobile-hide">Historique de la météo d'humeur :</h4>
+            <div>
+                <canvas id="div_chart" data-itemid="{{ itemId }}"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Nouvelle note{% endblock %}
+
+{% block current_page_name %}Nouvelle note{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Ajouter une nouvelle note</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+    {% if  userId is not empty %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a id="endlink1" href="{{ path('collab_index', {userId: userId}) }}" class="nav-link"><i class="fas fa-users"></i> Revenir à la page collab</a>
+        </li>
+    {% endif %}
+
+    <li class="nav-item d-none d-sm-inline-block">
+        <a id="endlink2" href="{{ path('note_index', {userId: userId}) }}" class="nav-link"><i class="fa-regular fa-note-sticky"></i> Retour à mes notes</a>
+    </li>
+{% endblock %}
+
+{% block body_id 'manager_note_new' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('newNote') }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="container main_text_color">
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+            {% if note is defined and note is not empty %}
+            <template id="newNoteCreation" data-noteid="{{ note.id }}" data-notecontent="{{ note.content|sanitize_html }}"></template>
+            {% endif %}
+        {% endfor %}
+
+        <div class="container">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-sm-12">
+                {{ form_row(form.collab) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                {{ form_row(form.type) }}
+                </div>
+            </div>
+            {% if is_granted('ROLE_MANAGER') %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ form_row(form.mindsetValue) }}
+                    </div>
+                </div>
+            {% endif %}
+            <div class="row">
+                <div class="col-sm-6">
+                    {{ form_row(form.content) }}
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label" for="note_content">Rendu</label>
+                    <div class="tinymce form-control" style="overflow-y: auto;height: 300px; background-color: white; color: #000000" id="markdowntextarearender"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                {{ form_row(form.publishedAt) }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-save" aria-hidden="true"></i> Créer la note
+            </button>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+{% endblock %}
+

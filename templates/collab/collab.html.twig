@@ -1,0 +1,246 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'collab_index' %}
+
+{% block title %}
+    {% if app.user.id == collab.id %}Ma page{% else %}Collaborateur{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('chart') }}
+    {{ encore_entry_script_tags('readNote') }}
+    {{ encore_entry_script_tags('mep_action') }}
+{% endblock %}
+
+{% block stylesheet_page %}
+{% endblock %}
+
+{% block current_page_name %}
+    {{ collab.fullName }}
+{% endblock %}
+
+{% block contentHeader %}{% endblock %}
+
+{% block contextual_menu %}
+    {% if collab.id is defined and collab.id == app.user.id %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('mindset_collab_new', {userId: collab.id})}}" class="nav-link"><i class="fas fa-cloud-sun"></i> Mettre à jour le Mood</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('o3_list', {idManager: collab.id})}}" class="nav-link"><i class="fa-regular fa-handshake"></i> 03 de mon équipe</a>
+        </li>
+    {% endif %}
+    {% if collab.id is defined and app.user.manager is not null and collab.id == app.user.manager.id %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('o3_list', {idManager: collab.id})}}" class="nav-link"><i class="fa-regular fa-handshake"></i> Réservation 03</a>
+        </li>
+    {% endif %}
+    {% if is_granted('ROLE_MANAGER') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('manager_note_collab_new', {userId: collab.id})}}" class="nav-link"><i class="fa fa-plus"></i> Créer une nouvelle note</a>
+        </li>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN')%}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('user_edit_him', {userId: collab.id})}}" class="nav-link"><i class="fas fa-user-edit"></i> Editer l'utilisateur</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if showAlerts %}
+        {% include 'widget/officePresenceAlert.html.twig' with {'currentWeekOfficeDates': currentWeekOfficeDatesCollab} %}
+    {% endif %}
+    {% include 'widget/collabHeader.html.twig' with {'collab': collab} %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+
+                {% include 'widgetv2/o3Selector.html.twig' with {'o3List': o3List, 'manager': collab.manager, 'title': "Mes prochaines O3" } %}
+
+                {% if showMindsetHistory %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                {% include 'widget/mindset.html.twig' with {'value': mindset.value} %} {% include 'widget/mindsetTendance.html.twig' with {'mindset': mindset} %} Bien être Global
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="div_chart" data-itemid="{{ collab.id }}" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if nextMepDates is not empty %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-truck-loading"></i> Mes prochaines MEP ({{ nextMepDates|length }})
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {% include 'widget/mepDates.html.twig' with {'mepDates': nextMepDates} %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="far fa-calendar-alt"></i> Calendrier
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% include 'widget/calendar.html.twig' with {'showTitle': false, 'itemType': 'user', 'itemId': collab.id, 'lang': app.request.locale} %}
+                    </div>
+                </div>
+
+            </div>
+            <!-- #################################### Colonne 2 -->
+            <div class="col-md-6">
+
+                {% if jiraResults is defined and jiraResults is not empty %}
+                    {% if jiraResults.body is defined and jiraResults.body is not empty %}
+                        {% if jiraResults.body.issues is defined and jiraResults.body.issues is not empty %}
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-bug"></i> Tickets Jira ({{ jiraResults.body.issues|length }})
+                                    </h3>
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    {% include 'widget/jiraTickets.html.twig' with {'jiraResults': jiraResults} %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+                {%  if squads is not empty %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-users"></i> Mes Squads
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {% include 'widget/squadList.html.twig' with {'showTitle': false, 'squads': squads, 'mindsetsSquad': mindsetsSquad} %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {%  if allUsersN1 is not empty %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-friends"></i> Mes collaborateurs
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {% include 'widget/usersList.html.twig' with {'showTitle': false, 'mindsets': mindsets, 'users': allUsersN1} %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if is_granted('ROLE_MANAGER') %}
+                    {%  if allNotes is not empty %}
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    <i class="far fa-comments"></i> Les derniers One-to-One  ({{ allNotes|length }})
+                                </h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                {% include 'widget/onetooneNotes.html.twig' with {'allNotes': allNotes} %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                {% if collab.projects is not empty %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fa-solid fa-handshake-angle"></i> Projets ({{ collab.projects|length }})
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {% include 'widget/projects.html.twig' with {'projects': collab.projects} %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

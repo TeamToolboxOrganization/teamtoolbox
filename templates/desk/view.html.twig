@@ -1,0 +1,25 @@
+{% extends 'basev2.html.twig' %}
+{% block title %}
+	Plan des bureaux
+{% endblock %}
+{% block contextual_menu %}
+	<li class="nav-item d-none d-sm-inline-block">
+		<a href="{{ path('desk_list')}}" class="nav-link"><i class="fa-solid fa-list-ol"></i> Liste des bureaux</a>
+	</li>
+{% endblock %}
+{% block current_page_name %}Plan des bureaux{% endblock %}
+{% block contentHeader %}
+{% endblock %}
+{% block body %}
+
+	<form id="dateSelectionForm" class="form-group text-center" action="{{ path('desk_view')}}?date=2022-06-22">
+		<label class="main_text_color" for="selectedDate">Selectionner la date</label>
+		<input type="date" id="selectedDate" name="selectedDate" value="{{ selectedDate }}">
+	</form>
+
+	<div id="map" class="map"></div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('desk') }}
+{% endblock %}

@@ -1,0 +1,31 @@
+<div class="container objectiveTheme-width-auto">
+    {% if showTitle is defined and showTitle %}
+        {% include 'widget/titleSection.html.twig' with {'icon': 'fas fa-object-ungroup', 'iconColor': 'text-info', 'title': 'Objectifs'} %}
+    {% endif %}
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <div class="row">
+                {% for objectiveTheme in objectiveThemes %}
+                    <!-- Team item -->
+                    <div class="col-xl-3 col-sm-6 mb-5">
+                        <div class="bg-light rounded shadow-sm py-5 px-4">
+
+                            {% if objectiveTheme.progress is not empty %}
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" role="progressbar" aria-valuenow="{{ objectiveTheme.progress }}" aria-valuemin="0" aria-valuemax="100">{{ objectiveTheme.progress }}%</div>
+                            </div>
+                            {% endif %}
+
+                            <h5 class="mb-0" title="{{ objectiveTheme.id }}">{{ objectiveTheme.title }}</h5>
+                            <span class="small text-muted">{{ objectiveTheme.description }}</span>
+                            <ul class="social mb-0 list-inline mt-3">
+                                {% include 'widget/usersList.html.twig' with {'showTitle': false, 'users': objectiveTheme.users} %}
+                            </ul>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

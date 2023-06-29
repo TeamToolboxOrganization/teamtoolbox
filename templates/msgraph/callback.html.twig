@@ -1,0 +1,27 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'msgraph_index' %}
+
+{% block title %}
+    MS Graph PHP Sample
+{% endblock %}
+
+{% block current_page_name %}
+    MS Graph PHP Sample
+{% endblock %}
+
+{% block contentHeaderTitle %}
+{% endblock %}
+
+{% block contextual_menu %}
+{% endblock %}
+
+{% block body %}
+
+    <div>Connexion réussie</div>
+    <div>{{ msUser.displayName }}</div>
+    <div>{{ msUser.userPrincipalName }}</div>
+    <div>{{ msUser.id }}</div>
+    <div>{{ msUser.preferredLanguage }}</div>
+
+{% endblock %}

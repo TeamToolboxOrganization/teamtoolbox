@@ -1,0 +1,25 @@
+@import 'colors';
+
+#calendar {
+  //max-width: 900px;
+  margin: 0 auto;
+}
+
+.loading {
+  opacity: 0.3;
+  background-color: #fff;
+  z-index: 99;
+}
+
+.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr {
+  background-color: $main_color;
+  color: $main_color_text;
+}
+
+//
+// calendar widget
+//
+.calendar-display-none {
+  display: none
+}
+

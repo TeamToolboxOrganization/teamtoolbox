@@ -1,0 +1,73 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}Mises en Prod{% endblock %}
+
+{% block current_page_name %}
+    Mises en Prod
+{% endblock %}
+
+{% block contextual_menu %}
+    {% if is_granted('ROLE_MEP_ORGA') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('mep_new') }}" class="nav-link"><i class="fa fa-plus"></i> Créer une nouvelle MEP</a>
+        </li>
+    {% endif %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a id="previousMep" href="#" class="nav-link"><i class="fa-solid fa-clock-rotate-left"></i> MEP passées</a>
+    </li>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('mep') }}
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body_id 'list_mep' %}
+
+{% block contentHeaderTitle %}
+    <h1 class="m-0">Mises en Prod</h1>
+{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert primary" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="top: -8px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+
+    <table class="table table-borderless main_text_color">
+        <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Version</th>
+            <th scope="col">Responsable</th>
+            <th scope="col">Etat</th>
+            <th class="mobile-hide" scope="col">Commentaire</th>
+            {% if is_granted('ROLE_MEP_ORGA') %}<th class="mobile-hide" scope="col"></th>{% endif %}
+            {% if is_granted('ROLE_ADMIN') %}<th class="mobile-hide" scope="col"></th>{% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for mep in meps %}
+            <tr mepid="{{ mep.id  }}" {% if date(mep.startAt) < date("now") %}data-ispassed="true" class="hide"{% else %}data-ispassed="false"{% endif %}>
+                <th scope="row" class="center-item-table">{% if date(mep.startAt) < date("now") %}<i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i>{% endif %} {{ mep.startAt|format_datetime('short', 'none', '', 'UTC') }}</th>
+                <td class="center-item-table">{% if mep.version is not empty %} {{ mep.version  }}{% endif %}</td>
+                <td class="center-item-table">{% if mep.collab is not empty %} <a href="{{ path('collab_index', {userId: mep.collab.id}) }}">{{ mep.collab.fullName }} </a>{% endif %}</td>
+                <td class="center-item-table text-secondary {% if mep.state == "Validé" %}mepColor{% elseif mep.state == "Annulé" %}mepColorCanceled{% else %}mepColorToValidate{% endif %}">{% if mep.state is not empty %} {{ mep.state  }}{% endif %}</td>
+                <td class="mobile-hide center-item-table">{% if mep.comment is not empty %} {{ mep.comment  }}{% endif %}</td>
+                {% if is_granted('ROLE_MEP_ORGA') %}<td class="mobile-hide center-item-table" ><a href="{{ path('mep_edit', {mepId: mep.id}) }}"><button type="button" class="btn btn-primary" name="show" value="{{ mep.id  }}"><i class="fas fa-edit" aria-hidden="true"></i> Editer</button></a></td>{% endif %}
+                {% if is_granted('ROLE_ADMIN') %}<td class="mobile-hide center-item-table" ><button type="button" class="btn btn-danger" name="remove" value="{{ mep.id  }}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button></td>{% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

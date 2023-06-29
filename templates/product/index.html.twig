@@ -1,0 +1,47 @@
+{% extends 'basev2.html.twig' %}
+{% block title %}
+    Liste des Produits
+{% endblock %}
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('dashboard_index') }}" class="nav-link"><i class="fa-solid fa-map-location-dot"></i> Retour au Dashboard</a>
+    </li>
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('app_product_new') }}" class="nav-link"><i class="fa fa-plus"></i> Créer un nouveau produit</a>
+    </li>
+{% endblock %}
+{% block body %}
+
+    <div class="container">
+        <table class="table table-borderless main_text_color">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Projets</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <th scope="row" class="center-item-table">{{ product.id }}</th>
+                    <td class="center-item-table">
+                        <a href="{{ path('app_product_show', {id: product.id})}}">
+                            {{ product.name }}
+                        </a>
+                    </td>
+                    <td class="center-item-table">{{ product.description }}</td>
+                    <td>
+                        {% for project in product.projects %}
+                            <a href="{{ path('project_details', {id: project.id}) }}">{{ project.name }}</a>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}
+

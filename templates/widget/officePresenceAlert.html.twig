@@ -1,0 +1,23 @@
+{% if currentWeekOfficeDates is empty or currentWeekOfficeDates|length < 1 %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            {% if currentWeekOfficeDates is empty %}
+                <div class="alert officeColor" role="alert">
+                    <a href="{% if pageLink is defined %}{{ path('calendar_index') }}{% else %}#calendar{% endif %}">Quel jour souhaites-tu aller au bureau cette semaine ?</a>
+                    <button type="button" class="close alert-close-alert-btn" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% elseif currentWeekOfficeDates|length < 2 %}
+                <div class="alert officeColor" role="alert">
+                    <a href="{% if pageLink is defined %}{{ path('calendar_index') }}{% else %}#calendar{% endif %}">Est-ce que tu ne viendrais pas un jour de plus au bureau cette semaine ?</a>
+                    <button type="button" class="close alert-close-alert-btn" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,12 @@
+[
+{% set i = 0 %}
+{% for birthday in birthdays %}{% set i = i+1 %}
+    {
+    {% if not onlyType %}"title": "{{ birthday[0] }}",{% else %}"title": "Anniversaire",{% endif %}
+    "url": "{{ path('collab_index', {userId: birthday[2]}) }}",
+    "start": "{{ birthday[1] }}",
+    "end": "{{ birthday[1] }}",
+    "icon": "fa-gift"
+    }{% if i != birthdays|length %},{% endif %}
+{% endfor %}
+]

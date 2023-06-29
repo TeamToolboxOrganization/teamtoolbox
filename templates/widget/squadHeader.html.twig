@@ -1,0 +1,15 @@
+<div class="card card-widget widget-user">
+
+    <div class="widget-user-header bg-info">
+        <h3 class="widget-user-username">{{ squad.name }}</h3>
+    </div>
+    <div class="widget-user-image">
+        {%  if squad.picture is not empty %}
+            <img src="{{ asset('uploads/squads/' ~ squad.picture) }}" alt="{{ squad.name }}"  class="img-circle elevation-2">
+        {% endif %}
+    </div>
+    <div class="card-footer">
+        <div class="row">
+        </div>
+    </div>
+</div>

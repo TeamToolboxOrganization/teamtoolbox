@@ -1,0 +1,7 @@
+{% for nextBirthday in nextBirthdays %}
+    {% for user in nextBirthday %}
+        {%  if user.days_remaining == 1 %}
+            <template name="notification" data-title="Anniversaire 🎂" data-body="Aujourd'hui, c'est l'anniversaire de {{ user.full_name }}"></template>
+        {% endif %}
+    {% endfor %}
+{% endfor %}

@@ -1,0 +1,14 @@
+{% if nextMepDates is not empty and nextMepDates[0].days_remaining < 7 %}
+    <div class="alert mepColor" role="alert">
+        {% if nextMepDates[0].days_remaining == 0 %}
+            <i class="far fa-bell"></i> N'oublies pas la mise à jour de de soir
+            <template name="notification" data-title="📅 MEP" data-body="N'oublie pas la mise à jour de ce soir"></template>
+        {% else %}
+            <i class="far fa-bell"></i> N'oublies pas la mise à jour de la semaine prochaine ({{ nextMepDates[0].start_at|format_datetime(pattern="dd/MM") }})
+            <template name="notification" data-title="📅 MEP" data-body="N'oublie pas la mise à jour de la semaine prochaine ({{ nextMepDates[0].start_at|format_datetime(pattern="dd/MM") }})"></template>
+        {% endif %}
+        <button type="button" class="close alert-close-alert-btn" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endif %}

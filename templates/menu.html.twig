@@ -1,0 +1,249 @@
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+        <li class="nav-item">
+            <a href="{{ path('dashboard_index') }}" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                    {{ 'menu.dashboard'|trans }}
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ path('desk_view') }}" class="nav-link">
+                <i class="nav-icon fa-solid fa-map-location-dot"></i>
+                <p>
+                    {{ 'menu.map'|trans }}
+                </p>
+            </a>
+        </li>
+
+        {% if is_granted('ROLE_USER') %}
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fa-solid fa-user-group"></i>
+                    <p>
+                        Team
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ path('calendar_index') }}" class="nav-link">
+                            <i class="far fa-calendar-alt nav-icon "></i>
+                            <p>{{ 'menu.caldendar'|trans }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('squad_index') }}" class="nav-link">
+                            <i class="fas fa-user-friends nav-icon"></i>
+                            <p>{{ 'menu.squads'|trans }}</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('objectives_index') }}" class="nav-link">
+                            <i class="fas fa-object-ungroup nav-icon"></i>
+                            <p>{{ 'menu.objectives'|trans }}</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="fas fa-truck-loading nav-icon"></i>
+                <p>
+                    Roadmap
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ path('mep_index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-calendar-alt"></i>
+                        <p>Mise en prod</p>
+                    </a>
+                </li>
+                {% if (is_granted('ROLE_LT') and not is_granted('ROLE_MANAGER')) or is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a href="{{ path('gantt_index') }}?view=staffing" class="nav-link">
+                        <i class="fa fa-edit nav-icon"></i>
+                        <p>Planif des Epic</p>
+                    </a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a href="{{ path('gantt_index') }}" class="nav-link">
+                        <i class="far fa-eye nav-icon"></i>
+                        <p>Suivi Roadmap</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        {% if app.user and app.user.apikeyazdo is not empty %}
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fa-brands fa-rebel"></i>
+                <p>
+                    Qualité
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ path('get_plans_list') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-list-check"></i>
+                        <p>
+                            Test Plan
+                            <span class="right badge badge-danger">New</span>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-toolbox"></i>
+                <p>
+                    {{ 'menu.toolbox'|trans }}
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ path('xlsxExportForm') }}" class="nav-link">
+                        <i class="nav-icon fas fa-file-export"></i>
+                        <p>
+                            {{ 'menu.export'|trans }}
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('project_search') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-handshake-angle"></i>
+                        <p>
+                            Guess Who ?
+                            <span class="right badge badge-primary">Bêta</span>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('vote_index') }}" class="nav-link">
+                        <i class="nav-icon fa-solid fa-person-booth"></i>
+                        <p>
+                            Vote
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('note_index') }}" class="nav-link">
+                        <i class="nav-icon fa-regular fa-note-sticky"></i>
+                        <p>
+                            {{ 'menu.mynotes'|trans }}
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fa-solid fa-dice"></i>
+                <p>
+                    Team Building
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ path('tool_index', {tool: 'workadventure'})  }}" class="nav-link">
+                        <i class="far fa-building nav-icon"></i>
+                        <p>Virtual Office</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        {% if app.user %}
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <i class="nav-icon fas fa-user-ninja"></i>
+                {% elseif is_granted('ROLE_MANAGER') %}
+                    <i class="nav-icon fas fa-user-tie"></i>
+                {% elseif is_granted('ROLE_LT')%}
+                    <i class="nav-icon fas fa-user-md"></i>
+                {% elseif is_granted('ROLE_MEP_ORGA')%}
+                    <i class="nav-icon fas fa-user-clock"></i>
+                {% else %}
+                    <i class="nav-icon fa fa-user"></i>
+                {% endif %}
+                <p>
+                    {{ app.user.fullname }}
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a href="{{ path('upload_everwin') }}" class="nav-link">
+                            <i class="fas fa-file-upload nav-icon"></i>
+                            <p>Import RHPI</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('user_list_admin') }}" class="nav-link">
+                            <i class="fas fa-user-cog nav-icon"></i>
+                            <p>Admin des utilisateurs</p>
+                        </a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a href="{{ path('user_edit') }}" class="nav-link">
+                            <i class="fa fa-edit nav-icon"></i>
+                            <p>{{ 'menu.user'|trans }}</p>
+                        </a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a href="{{ path('user_customisation') }}" class="nav-link">
+                        <i class="fa-solid fa-palette nav-icon"></i>
+                        <p>Personalisation</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-globe"></i>
+                        <p>
+                            {{ 'menu.choose_language'|trans }}
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        {% for locale in locales() %}
+                            <li class="nav-item">
+                                <a href="{{ path(app.request.get('_route', 'collab_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}" class="nav-link {% if app.request.locale == locale.code %}active{% endif %}">
+                                    <p>{{ locale.name|capitalize }} <small>{{ locale.code[0:2] }}</small></p>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ path('msgraph_signout')  }}" class="nav-link">
+                        <i class="fa fa-sign-out nav-icon"></i>
+                        <p>{{ 'menu.logout'|trans }}</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {% endif %}
+    </ul>
+</nav>

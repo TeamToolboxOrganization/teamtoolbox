@@ -1,0 +1,104 @@
+{% set weekDays = [] %}
+{% set weekDaysDates = [] %}
+{% set currentDate = "now" %}
+{% set isToday = true %}
+{% set iterator = 0 %}
+
+<div class="container" style="width: auto;">
+    <template id="current_user_li">
+        <li data-userid={{ app.user.id }} class="col-md-3">
+            <div class="img">
+                {%  if app.user.picture is not empty %}
+                    <img src="{{ asset('uploads/pictures/' ~ app.user.picture) }}" alt="{{ app.user.fullName }}" class="img-fluid rounded-circle img-thumbnail shadow-sm userListAdmin-img">
+                {% else %}
+                    <i class="fas fa-user fa-2x userListAdmin-img"></i>
+                {% endif %}
+            </div>
+            <div class="details">
+                <div class="name">
+                    <a href="{{ path('collab_index', {userId: app.user.id}) }}">{{ app.user.fullName }}</a>
+                </div>
+                {%  if app.user.squad is not empty %}
+                    <div class="time">
+                        <i class="fas fa-user-friends"></i> {{ app.user.squad.name }}
+                    </div>
+                {% endif %}
+            </div>
+        </li>
+    </template>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <div class="tabs-wrapper tabs-no-header">
+                    <ul class="nav nav-tabs">
+                        {% set iterator = 0 %}
+                        {% for i in 0..6 %}
+                            {% set currentDateString = currentDate|date_modify('+' ~ i ~ ' day')|format_datetime(pattern="EEEE")|capitalize %}
+                            {% if currentDateString != "Samedi" and currentDateString != "Dimanche" %}
+                                {% set weekDays = weekDays|merge([currentDateString]) %}
+                                {% set weekDaysDates = weekDaysDates|merge([currentDate|date_modify('+' ~ i ~ ' day')|format_datetime(pattern="Y-MM-dd")]) %}
+                                <li data-target="tab-users{{ iterator }}" data-btn-tab="true" class="{% if isToday %}active{% endif %}"><a data-toggle="tab">{% if isToday %}Aujourd'hui{% else %}{{ currentDateString }}{% endif%}</a></li>
+                                {% set iterator = iterator + 1 %}
+                            {% endif %}
+                            {% set isToday = false %}
+                        {% endfor%}
+                    </ul>
+                    <div class="tab-content tab-content-body clearfix">
+                        {% set iterator = 0 %}
+                        {% for weekDay in weekDays %}
+                        <div class="tab-pane fade{% if iterator == 0%} active in{% endif %}" id="tab-users{{ iterator }}">
+                            <ul class="widget-users row" data-date="{{ weekDaysDates[iterator] }}">
+                                {% set todayPresences = [] %}
+                                {% for weekOfficeDate in officeDates %}
+                                    {% set currentDate = weekOfficeDate.startAt|format_datetime(pattern="EEEE")|capitalize %}
+                                    {% if currentDate == weekDay %}
+                                        {% set todayPresences = todayPresences|merge([weekOfficeDate]) %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% for todayPresence in todayPresences %}
+                                    {% if todayPresence.amPm == 1 %}
+                                        {% set amPm = " Matin" %}
+                                    {% elseif todayPresence.amPm == 2 %}
+                                        {% set amPm = " Aprem" %}
+                                    {% else %}
+                                        {% set amPm = "" %}
+                                    {% endif %}
+                                    <li id="tab-users{{ iterator }}" data-userid={{ todayPresence.collab.id }} class="col-md-3">
+                                        <div class="img">
+                                            {%  if todayPresence.collab.picture is not empty %}
+                                                <img src="{{ asset('uploads/pictures/' ~ todayPresence.collab.picture) }}" alt="{{ todayPresence.collab.fullName }}" class="img-fluid rounded-circle img-thumbnail shadow-sm userListAdmin-img">
+                                            {% else %}
+                                                <i class="fas fa-user fa-2x userListAdmin-img"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="details">
+                                            <div class="name">
+                                                <a href="{{ path('collab_index', {userId: todayPresence.collab.id}) }}">{{ todayPresence.collab.fullName }}</a>
+                                            </div>
+                                            {%  if todayPresence.collab.squad is not empty %}
+                                            <div class="time">
+                                                <i class="fas fa-user-friends"></i> {{ todayPresence.collab.squad.name }}
+                                            </div>
+                                            {% endif %}
+                                            {% if amPm %}
+                                            <div class="type">
+                                                <span class="label label-primary">{{ amPm }}</span>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a data-date="{{ weekDaysDates[iterator] }}" data-type="office" class="btn btn-primary pull-right">Venir ce jour</a>
+                            <a href="{{ path('desk_view')}}" class="btn btn-primary pull-right">
+                                <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Plan des bureaux
+                            </a>
+                        </div>
+                            {% set iterator = iterator + 1 %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

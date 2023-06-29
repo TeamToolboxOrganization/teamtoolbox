@@ -1,0 +1,1 @@
+import '../scss/page_userListAdmin.scss';

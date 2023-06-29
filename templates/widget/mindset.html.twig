@@ -1,0 +1,14 @@
+{% if value is not defined or value is empty %}
+{% elseif value <= 4 %}
+    <span role="img" class="text-critical" title="{{ value }}">
+        <i class="fas fa-cloud-showers-heavy"></i>
+    </span>
+{% elseif value > 4 and value < 7 %}
+    <span role="img" class="text-warn" title="{{ value }}">
+        <i class="fas fa-cloud"></i>
+    </span>
+{% elseif value >= 7 %}
+    <span role="img" class="text-succes" title="{{ value }}">
+        <i class="fas fa-sun"></i>
+    </span>
+{% endif %}

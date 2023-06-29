@@ -1,0 +1,6 @@
+{
+    "labels":[{% set i = 0 %}{% for category in planification|keys %}{% set i = i+1 %}"{{ category }}"{% if i != planification|length %},{% endif %}{% endfor %}],
+    "data":[{% set i = 0 %}{% for category in planification %}{% for time,duration in category %}{% set i = i+1 %}{% if time == "time" %}"{% set day = (duration | date("%d")) %}{% set hour = (duration | date("%H")) %}{% set min = (duration | date("%I")) %}{{ (day*24)+hour+(min/100) }}"{% if i != ((planification|length *2)-1) %},{% endif %}{% endif %}{% endfor %}{% endfor %}],
+    "color":[{% set i = 0 %}{% for category in planification %}{% for color,coloration in category %}{% set i = i+1 %}{% if color == "color" %}"{{ coloration }}"{% if i != (planification|length *2) %},{% endif %}{% endif %}{% endfor %}{% endfor %}],
+    "error":"{{ error }}"
+}

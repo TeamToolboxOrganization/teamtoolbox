@@ -1,0 +1,37 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'objectives_index' %}
+
+{% block title %}Squads{% endblock %}
+
+{% block current_page_name %}
+    Squads
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('page_squad') }}
+{% endblock %}
+
+{% block contentHeaderTitle %}<h1 class="m-0">Liste des Squads</h1>{% endblock %}
+{% block breadcrumb %}{% endblock %}
+
+{% block contextual_menu %}
+    {% if is_granted('ROLE_MANAGER') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('squad_new') }}" class="nav-link"><i class="fas fa-plus"></i> Créer une Squad</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="top: -8px">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endfor %}
+
+    {% include 'widget/squadList.html.twig' with {'showTitle': false, 'squads': squads, 'mindsetsSquad': mindsetsSquad} %}
+{% endblock %}

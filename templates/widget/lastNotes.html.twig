@@ -1,0 +1,95 @@
+    {% if title is not defined %}{% set title = 'Mes dernières notes' %}{% endif %}
+    {% if icon is not defined %}{% set icon = 'fas fa-history' %}{% endif %}
+    {% if iconColor is not defined %}{% set iconColor = 'text-primary' %}{% endif %}
+    {% if showTitle is defined and showTitle %}
+        {% include 'widget/titleSection.html.twig' with {'icon': icon, 'iconColor': iconColor, 'title': title} %}
+    {% endif %}
+
+        {% if check is defined and check %}
+            <div class="row">
+                <div class="col-sm-2">
+                    <h4>Collaborateur</h4>
+                </div>
+                <div class="col-sm-1">
+                    <h4>Type</h4>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Contenu</h4>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Date</h4>
+                </div>
+                <div class="col-sm-1">
+                    <h4>Fait</h4>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="{% if is_granted('ROLE_MANAGER') %}col-sm-1{% else %}col-sm-2{% endif %}">
+                    <h4>Collaborateur</h4>
+                </div>
+                {% if is_granted('ROLE_MANAGER') %}
+                    <div class="col-sm-1">
+                        <h4>Moral</h4>
+                    </div>
+                {% endif %}
+                <div class="col-sm-1">
+                    <h4>Type</h4>
+                </div>
+                <div class="col-sm-6">
+                    <h4>Contenu</h4>
+                </div>
+                <div class="col-sm-2">
+                    <h4>Date</h4>
+                </div>
+                <div class="col-sm-1">
+                </div>
+            </div>
+        {% endif %}
+
+        {% for note in notes %}
+            <div noteid="{{ note.id }}" class="row">
+                {% if check is defined and check %}
+                    <div class="col-sm-2">
+                        {% if note.collab is not null and note.collab is defined %}
+                            <a href="{{ path('collab_index', {userId: note.collab.id}) }}">
+                                {{ note.collab.fullName }}
+                            </a>
+                        {% endif %}
+                    </div>
+                {% else %}
+                        <div class="{% if is_granted('ROLE_MANAGER') %}col-sm-1{% else %}col-sm-2{% endif %}">
+                            {% if note.collab is not null and note.collab is defined %}
+                                <a href="{{ path('collab_index', {userId: note.collab.id}) }}">
+                                    {{ note.collab.fullName }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        <div class="col-sm-1">
+                            {% if note.mindset is not null %}
+                                {% include 'widget/mindset.html.twig' with {'value': note.mindset.value} %}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <div class="col-sm-1">
+                    {% include 'widget/noteType.html.twig' with {'type': note.type} %}
+                </div>
+                    <div class="col-sm-6 {% if note.checked %}text-bar{% endif %}" name="readNoteNode" id="{{ note.id }}">
+                    </div>
+                <div class="col-sm-2">
+                    {{ note.publishedAt|format_datetime('short', 'none', '', 'UTC') }}
+                </div>
+                <div class="col-sm-1">
+                    {% if check is defined and check %}
+                        <div class="small text-gray">
+                            <input data-noteid="{{ note.id }}" type="checkbox" value="{% if note.checked %}true{% else %}false{% endif %}"{% if note.checked %} checked{% endif %}>
+                        </div>
+                    {% else %}
+                        <button type="button" class="btn btn-danger" name="remove" value="{{ note.id  }}"><i class="fas fa-trash-alt" aria-hidden="true"></i></button>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}

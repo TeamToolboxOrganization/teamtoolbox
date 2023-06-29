@@ -1,0 +1,119 @@
+{% extends 'basev2.html.twig' %}
+
+{% block body_id 'objectives_index' %}
+
+{% block title %}Squads{% endblock %}
+
+{% block current_page_name %}
+    Squads
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% if is_granted('ROLE_MANAGER') %}
+    {{ encore_entry_script_tags('chart') }}
+    {% endif %}
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('page_widget') }}
+{% endblock %}
+
+{% block contentHeader %}{% endblock %}
+
+{% block contextual_menu %}
+    <li class="nav-item d-none d-sm-inline-block">
+        <a href="{{ path('squad_index') }}" class="nav-link"><i class="fas fa-th-list"></i> Liste des Squads</a>
+    </li>
+    {% if is_granted('ROLE_MANAGER') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('squad_add_user', {squadId: squad.id}) }}" class="nav-link"><i class="fas fa-user-plus"></i> Ajouter un utilisateur</a>
+        </li>
+    {% endif %}
+    {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="{{ path('squad_delete', {squadId: squad.id}) }}" class="nav-link"><i class="fas fa-trash-alt"></i> Supprimer la squad</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% include 'widget/squadHeader.html.twig' with {'squad': squad} %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+
+                {% if is_granted('ROLE_MANAGER') %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                {% include 'widget/mindset.html.twig' with {'value': mindset.value} %} {% include 'widget/mindsetTendance.html.twig' with {'mindset': mindset} %} Bien être Global
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart">
+                                <canvas id="div_chart" data-itemid="{{ squad.id }}" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="far fa-calendar-alt"></i> Calendrier
+                        </h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% include 'widget/calendar.html.twig' with {'showTitle': false, 'itemType': 'squad', 'itemId': squad.id, 'lang': app.request.locale} %}
+                    </div>
+                </div>
+
+            </div>
+            <!-- #################################### Colonne 2 -->
+            <div class="col-md-6">
+
+                {%  if users is not empty %}
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-friends"></i> L'équipe ({{ users|length }})
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            {% include 'widget/usersList.html.twig' with {'showTitle': false, 'mindsets': mindsets, 'users': users} %}
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

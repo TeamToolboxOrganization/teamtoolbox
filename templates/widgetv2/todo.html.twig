@@ -1,0 +1,39 @@
+
+<div class="card card-success">
+    <div class="card-header">
+        <h3 class="card-title"><i class="ion ion-clipboard mr-1"></i> To Do List</h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <ul class="todo-list" data-widget="todo-list">
+            {% for note in notes %}
+                <li noteid="{{ note.id }}">
+                    <span class="handle">
+                    <i class="fas fa-ellipsis-v"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                    </span>
+                    <div class="icheck-primary d-inline ml-2">
+                        <input data-noteid="{{ note.id }}" type="checkbox" value="" name="todo{{ note.id }}" id="todoCheck{{ note.id }}" {% if note.checked %} checked{% endif %}>
+                        <label for="todoCheck{{ note.id }}"></label>
+                    </div>
+                    <span class="text" name="readNoteNode" id="{{ note.id }}"></span>
+                    <small class="badge badge-primary"><i class="far fa-clock"></i> {{ note.publishedAt|format_datetime('short', 'none', '', 'UTC') }}</small>
+                    <div class="tools">
+                        <i class="fas fa-edit"></i>
+                        <i class="fas fa-trash-o"></i>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="card-footer clearfix">
+        <button type="button" class="btn btn-primary float-right" onclick="window.location.href='{{ path('manager_note_new') }}';"><i class="fas fa-plus"></i> Add item</button>
+    </div>
+</div>

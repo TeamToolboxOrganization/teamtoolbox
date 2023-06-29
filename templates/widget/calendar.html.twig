@@ -1,0 +1,7 @@
+{% if showTitle is defined and showTitle %}
+    {% include 'widget/titleSection.html.twig' with {'icon': 'far fa-calendar-alt', 'iconColor': 'text-primary', 'title': 'Calendrier'} %}
+{% endif %}
+    <div id="loading" class="calendar-display-none">Chargement en cours...</div>
+    <div id="calendar" data-itemId={{ itemId }} data-itemType={{ itemType }} data-currentUserId={{ app.user.id }} data-lang="{{ lang }}" data-alldates="{% if alldates is defined %}{{ alldates }}{% else %}0{% endif %}"></div>
+{{ encore_entry_script_tags('calendar') }}
+{{ encore_entry_link_tags('calendar') }}

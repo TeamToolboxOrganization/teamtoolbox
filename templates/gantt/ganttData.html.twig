@@ -1,0 +1,47 @@
+{
+"tasks":[
+{% set i = 0 %}
+{% for task in allTasks %}{% set i = i+1 %}
+    {
+    "id":{{ task.id }},
+    "key":"{{ task.key }}",
+    "text":"{{ task.text }}",
+    {% if task.type is defined and task.type == "milestone" %}"rollup": "true",{% endif %}
+    "start_date":"{{ task.startDate|format_datetime(pattern="dd/MM/YYYY") }}",
+    {% if task.owner is defined and task.owner %}"owner":{{ task.owner.id }},{% endif %}
+    {% if task.squad is defined and task.squad %}"squad":"{{ task.squad }}",{% endif %}
+    {% if open is defined and open %}"open":"{{ open }}",{% endif %}
+    {% if task.deadline is defined and task.deadline %}"deadline":"{{ task.deadline|format_datetime(pattern="dd/MM/YYYY") }}",{% endif %}
+    {% if task.duration is defined and task.duration %}"duration":"{{ task.duration }}",{% endif %}
+    {% if task.endDate is defined and task.endDate %}"end_date":"{{ task.endDate|format_datetime(pattern="dd/MM/YYYY") }}",{% endif %}
+    "progress":{{ task.progress }}
+    {% if task.sortOrder is defined and task.sortOrder %}, "order":{{ task.sortOrder }}{% endif %}
+    {% if task.jiraType is defined and task.jiraType %}, "jiratype":"{{ task.jiraType }}"{% endif %}
+    {% if task.type is defined and task.type %}, "type":"{{ task.type }}"{% endif %}
+    {% if task.parent is defined and task.parent %}, "parent":{{ task.parent.id }}{% endif %}
+    }{% if i != allTasks|length %},{% endif %}
+{% endfor %}
+],
+"links":[
+{% set i = 0 %}
+{% for link in allLinks %}{% set i = i+1 %}
+    {
+    "id":{{ link.id }},
+    "source":{{ link.source.id }},
+    "target":{{ link.target.id }},
+    "type":"{{ link.type }}"
+    }{% if i != allLinks|length %},{% endif %}
+{% endfor %}
+]{% if allUsers is defined and allUsers %},
+"collections": {
+    "users":[
+    {% set i = 0 %}
+    {% for user in allUsers %}{% set i = i+1 %}
+        {
+        "value":{{ user.id }},
+        "label":"{{ user.fullName }}"
+        }{% if i != allUsers|length %},{% endif %}
+    {% endfor %}
+    ]
+    }{% endif %}
+}

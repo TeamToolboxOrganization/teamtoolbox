@@ -1,0 +1,161 @@
+@import '~dhtmlx-gantt/codebase/dhtmlxgantt.css';
+//@import '~dhtmlx-gantt/codebase/skins/dhtmlxgantt_material.css';
+
+#gantt_container{
+  height:1080px;
+  padding:0px;
+  margin:0px;
+  overflow: hidden;
+}
+
+.navbar {
+  position: relative;
+  min-height: 60px;
+  margin-bottom: 0px !important;
+  border: 1px solid transparent;
+}
+
+.gantt_grid_scale .gantt_grid_head_cell,
+.gantt_task .gantt_task_scale .gantt_scale_cell {
+  font-weight: bold;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.gantt_task_cell.no_work_hour {
+  background-color: #F5F5F5;
+}
+
+.gantt_task_row.gantt_selected .gantt_task_cell.no_work_hour {
+  background-color: #F8EC9C;
+}
+
+.deadline {
+  position: absolute;
+  border-radius: 12px;
+  border: 2px solid #585858;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  margin-top: 6px;
+  z-index: 1;
+  background: url("https://docs.dhtmlx.com/gantt/samples/04_customization/common/deadline_icon.png") center no-repeat;
+}
+
+.overdue-indicator {
+  width: 24px;
+  margin-top: 5px;
+  height: 24px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 17px;
+  color: white;
+  background: rgb(255, 60, 60);
+  line-height: 25px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.epic{
+  border:2px solid #904ee2 !important;
+  color: #904ee2 !important;
+  background: #904ee2 !important;
+}
+.epic .gantt_task_progress{
+  background: #6525db !important;
+  text-align: left;
+}
+
+.epic .gantt_task_content{
+  color: #FFFFFF !important;
+}
+
+.us{
+  border:2px solid #63ba3c;
+  color:#63ba3c;
+  background: #63ba3c;
+}
+.us .gantt_task_progress{
+  background: #23964d;
+  text-align: left;
+}
+
+.task{
+  border:2px solid #4bade8;
+  color:#4bade8;
+  background: #4bade8;
+}
+.task .gantt_task_progress{
+  background: #3d93bf;
+  text-align: left;
+}
+
+.spike{
+  border:2px solid #eeb402;
+  color:#eeb402;
+  background: #eeb402;
+}
+.spike .gantt_task_progress{
+  background: #cb9800;
+  text-align: left;
+}
+
+.bug{
+  border:2px solid #f33434;
+  color:#f33434;
+  background: #f33434;
+}
+.bug .gantt_task_progress{
+  background: #b51f1f;
+  text-align: left;
+}
+
+.defect{
+  border:2px solid #b8b8b8;
+  color:#b8b8b8;
+  background: #b8b8b8;
+}
+.defect .gantt_task_progress{
+  background: #868686;
+  text-align: left;
+}
+
+.quarterColor1{
+  background-color: #c8c8c8 !important
+}
+.quarterColor2{
+  background-color: #b2e589 !important
+}
+.quarterColor3{
+  background-color: #efbaff !important
+}
+.quarterColor4{
+  background-color: #ffd88a !important
+}
+
+.gantt_tree_icon.gantt_epic {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAjUlEQVR4XmNgIAPoSriX2m+f4PcID6pzOQpUBtVQ53IMUwUmAhoK1YAphwth1zA98vHHl38wVePUcGL5x////2Oqxq4BaPyPL/9I0AAxHg4+oboNiwagCmQNQP0ENMARUPXPL/+ALiRBA5rxBDQA3YZmPAENWBFUA9FJYwdUAzjx7cBUgYyAhiISH0kAAKqCaGWQKB4sAAAAAElFTkSuQmCC');
+}
+
+.gantt_tree_icon.gantt_task {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAsUlEQVR4XmNgIAOIm3na9OzxXvsCD3KcfhqoDKrBccZpTBWYCGgoVAOmHC5EWEPzsfdARKwGoNL///9/+fWPKA05e958/vUPqGHWxU84NcAdELbp5d0Pv4Gq9zz4jmwKuob/YNB35uPxZz+AjHsffgN14tMAVArRA3F64vbXyKqxaEDWU3HwHZpq7BqAaNWNL0CEqRqnBjwIqoHIpGHbuxeqAZiqgBxMFcgIaCgi8ZEEAG73gBpWKOixAAAAAElFTkSuQmCC');
+}
+
+.gantt_tree_icon.gantt_us {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAcklEQVR4XmNgIAPIWwkFTDdI3mWDB4UtMgEqg2oIX2yCqQITAQ2FasCUw4WwaHj06fZ/JPDw0y0CGpBVQ8BQ1QD0Otz3hDV8+/05Z58HEAEZhDW8+f684XgChA1kALkENOBHUA0kJw1iEh/QUETiIwkAAOfdRqoXRzbyAAAAAElFTkSuQmCC');
+}
+
+.gantt_tree_icon.gantt_spike {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAArUlEQVR4XmNgIAMEGHKfr5P5P0cZD7rfIQdUBtXwoFMOUwUmAhoK1YAut8jg/8FSEAIyUKWwaVjn8//nx/+31oLQz08gLgENb6+BzIawjzf/f3ackAYgwM3FpgFow9YoKBvIeH6CkIbdGf8/PwF5F4iAnoFrxqlhDtgSCHh1Hk0Kh4Zba6AagAyiNABdBQFABlEacCOoBiKTxoV6WNIApiogB1MFMgIaikh8JAEA4F5q9BQyGGEAAAAASUVORK5CYII=');
+}
+
+.gantt_tree_icon.gantt_defect {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAp0lEQVR4XmNgIAMYmlrWd0yeu2IrHtQ5eR5QGVRD5+T5mCowEdBQqAZMOVwIu4ZDJy+eu3wLiA6euEBYw9v3H////w8k4Qx8GoBmAxWt33EYwgUygFygIE4N567cQjMSyAUK4tPw8MkLEjRgddLWfcdxaoAYCVT07OUbCAPZeOwa5kKC9cotIEI2G58GPAiqgcik0dAJSxrAVAXkYKpARkBDEYmPJAAA5reUo0W5i0QAAAAASUVORK5CYII=');
+}
+
+.gantt_tree_icon.gantt_bug {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAfklEQVR4XmNgIAN4iAvtstZ/6mmFB52wNwIqg2o46WCEqQITAQ2FasCUw4WooeFZiNuX9Sv+vHgGRJ8WzyGs4cv6lf+RAJBLQMO/L5+RNQDtIVHDy+cENHxaMhdZA5BLQMNTsDeABgMRmmqcGvAgcjWQnDSISXxAQxGJjyQAAJCXOXuUSWgkAAAAAElFTkSuQmCC');
+}
