@@ -465,6 +465,10 @@ class CalendarController extends AbstractController
      */
     private function getMeettings($graph, $currentUser, $timezone, \DateTimeImmutable $startOfWeek, \DateTimeImmutable $endOfWeek)
     {
+        if($currentUser->getMsToken() == null){
+            return [];
+        }
+
         $queryParams = array(
             'startDateTime' => $startOfWeek->format(\DateTimeInterface::ISO8601),
             'endDateTime' => $endOfWeek->format(\DateTimeInterface::ISO8601),
