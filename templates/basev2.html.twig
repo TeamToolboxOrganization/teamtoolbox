@@ -103,7 +103,11 @@
 
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="{{ asset('uploads/pictures/' ~ app.user.picture) }}" class="img-circle elevation-2" alt="User Image">
+                    {%  if app.user.picture is not empty %}
+                        <img src="{{ asset('uploads/pictures/' ~ app.user.picture) }}" alt="{{ app.user.fullName }}" class="img-fluid rounded-circle img-thumbnail shadow-sm user-img">
+                    {% else %}
+                        <i class="fas fa-user fa-2x userListAdmin-img"></i>
+                    {% endif %}
                 </div>
                 <div class="info">
                     <a href="{{ path('collab_index', {userId: app.user.id}) }}" class="d-block">{{ app.user.fullName }}</a>

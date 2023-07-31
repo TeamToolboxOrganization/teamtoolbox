@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\MsEventDTO;
 use App\Entity\O3;
 use App\Entity\User;
@@ -798,6 +799,9 @@ class CalendarController extends AbstractController
         $user = $this->getUser();
 
         // Init all parameters
+        /**
+         * @var Category $defaultActivity
+         */
         $defaultActivity = $user->getDefaultActivity();
 
         // Get user's timezone
@@ -835,7 +839,7 @@ class CalendarController extends AbstractController
         // Calcul Duration for Activity by day
         $days = $this->calculateDuration($resultsdata, $startDay, $totalDays, $timezone, $categoryRepository);
 
-        return $this->calibrateNbHours($days, $timezone, $durationInt, $defaultActivity);
+        return $this->calibrateNbHours($days, $timezone, $durationInt, $defaultActivity->getName());
     }
 
     /**
