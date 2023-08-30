@@ -526,7 +526,7 @@ class CalendarController extends AbstractController
     }
 
     #[Route("/DLxls",name: "xls_user")]
-    public function getXLS(MsGraphController $msTokenController, ManagerRegistry $managerRegistry, CategoryRepository $categoryRepository, Request $request, int $startHour = 9, int $startMin = 0, int $durationInt = 7)
+    public function getXLS(MsGraphController $msTokenController, ManagerRegistry $managerRegistry, CategoryRepository $categoryRepository, Request $request, int $startHour = 9, int $startMin = 0, int $durationInt = 7): Response
     {
         // Init all parameters
         $parameters = $request->query->all();
@@ -538,6 +538,12 @@ class CalendarController extends AbstractController
         // Get user
         /** @var User $user */
         $user = $this->getUser();
+
+        if($user->getMsToken() == null){
+            return new Response(
+                "You must be connected to Microsoft to use this feature",
+                Response::HTTP_BAD_REQUEST);
+        }
 
         // Get user's timezone
         $timezone = MsTimeZones::getTzFromWindows($user->getMsToken()->getUserTimeZone());

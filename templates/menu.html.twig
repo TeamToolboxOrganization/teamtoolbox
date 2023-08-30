@@ -114,6 +114,7 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                {%  if app.user.msToken is not empty %}
                 <li class="nav-item">
                     <a href="{{ path('xlsxExportForm') }}" class="nav-link">
                         <i class="nav-icon fas fa-file-export"></i>
@@ -122,6 +123,7 @@
                         </p>
                     </a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a href="{{ path('project_search') }}" class="nav-link">
                         <i class="nav-icon fa-solid fa-handshake-angle"></i>

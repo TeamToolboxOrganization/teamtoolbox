@@ -74,12 +74,12 @@
             {% include 'widgetv2/birthdays.html.twig' with {'nextBirthdays': nextBirthdays, 'showTitle': false} %}
         </div>
     </div>
-
+    {% if app.user.msToken is not empty %}
     <div class="row">
         <div class="col-md-6">
-            {% if app.user.msToken is not empty %}
+
             {% include 'widgetv2/calendarMS.html.twig' with {'events': events} %}
-            {% endif %}
+
         </div>
         <div class="col-md-6">
 
@@ -137,6 +137,7 @@
 
         </div>
     </div>
+    {% endif %}
 
     <div class="row">
         <div class="col-md-6">
