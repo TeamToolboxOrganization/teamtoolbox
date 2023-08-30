@@ -444,7 +444,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return MsToken
+     * @return MsToken|null
      */
     public function getMsToken(): ?MsToken
     {

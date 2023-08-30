@@ -623,7 +623,7 @@ class CalendarController extends AbstractController
         );
     }
 
-    private function calculateDuration(array $msEventDtos, $startDay, $totalDays, $timezone, CategoryRepository $categoryRepository)
+    private function calculateDuration(array $msEventDtos, $startDay, $totalDays, $timezone, CategoryRepository $categoryRepository): array
     {
         $days = [];
         $addedDay = new \DateTime($startDay->format("Y-m-d"), new \DateTimeZone($timezone->getName()));
@@ -711,7 +711,7 @@ class CalendarController extends AbstractController
         }
     }
 
-    private function calibrateNbHours($days, $timezone, $durationInt, $defaultActivity)
+    private function calibrateNbHours($days, $timezone, $durationInt, $defaultActivity): array
     {
         $initDateTime = new \DateTime();
         $initDateTime->setTimezone($timezone);//DateTime Initial /!\ Penser à le cloner et non pas à l'affecter sinon sa valeur change
@@ -793,10 +793,15 @@ class CalendarController extends AbstractController
     /**
      * @param string $duration => value expected : "week", "month".
      */
-    private function getDurationActivities(MsGraphController $msTokenController, ManagerRegistry $managerRegistry,  CategoryRepository $categoryRepository, string $duration, int $startHour = 9, int $startMin = 0, int $durationInt = 7)
+    private function getDurationActivities(MsGraphController $msTokenController, ManagerRegistry $managerRegistry,  CategoryRepository $categoryRepository, string $duration, int $startHour = 9, int $startMin = 0, int $durationInt = 7): ?array
     {
         // Get user
         $user = $this->getUser();
+
+        if($user->getMsToken() == null)
+        {
+            return null;
+        }
 
         // Init all parameters
         /**
@@ -846,7 +851,7 @@ class CalendarController extends AbstractController
      * @param string $duration => value expected : "week", "month".
      */
     #[Route("/planification/{duration}/{format}",name: "current_month_planification")]
-    public function getPlanifiedHours(string $duration, MsGraphController $msTokenController, ManagerRegistry $managerRegistry, CategoryRepository $categoryRepository, CustomColorRepository $customColorRepository, string $format = "http")
+    public function getPlanifiedHours(string $duration, MsGraphController $msTokenController, ManagerRegistry $managerRegistry, CategoryRepository $categoryRepository, CustomColorRepository $customColorRepository, string $format = "http"): BinaryFileResponse|Response
     {
         $error = "";
         $errorTab = [];
@@ -869,6 +874,13 @@ class CalendarController extends AbstractController
 
         $result = [];
         $days = $this->getDurationActivities($msTokenController, $managerRegistry, $categoryRepository, $duration);
+        if($days == null){
+            return $this->render('widget/planification.json.twig', [
+                'planification' => $result,
+                'error' => "User not connected to MSGraph.",
+            ]);
+        }
+
         if($format == "http"){
             foreach ($days as $day => $value) {
                 foreach ($value as $category => $dateCat) {
