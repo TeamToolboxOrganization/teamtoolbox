@@ -50,3 +50,22 @@ Execute this command to run tests:
 $ cd my_project/
 $ ./bin/phpunit
 ```
+
+Build and run Docker image
+--------------------------
+
+Execute this command to build image:
+
+```bash
+$ docker build -t traxxx86/teamtoolbox:latest .
+```
+
+Execute this command to run:
+
+```bash
+$ docker run \
+    -d \
+    -p 8080:80 \
+    -v $(pwd)/data:/var/www/html/data \
+    traxxx86/teamtoolbox:latest
+```
