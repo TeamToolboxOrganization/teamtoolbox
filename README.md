@@ -57,7 +57,7 @@ Build and run Docker image
 Execute this command to build image:
 
 ```bash
-$ docker build -t traxxx86/teamtoolbox:latest .
+$ docker build -t teamtoolboxorganization/teamtoolbox:latest .
 ```
 
 Execute this command to run:
@@ -65,7 +65,8 @@ Execute this command to run:
 ```bash
 $ docker run \
     -d \
+    --name teamtoolbox \
     -p 8080:80 \
     -v $(pwd)/data:/var/www/html/data \
-    traxxx86/teamtoolbox:latest
+    teamtoolboxorganization/teamtoolbox:latest
 ```
