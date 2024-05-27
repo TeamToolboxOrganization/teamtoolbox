@@ -225,6 +225,125 @@
                 <source>param.sup.export</source>
                 <target>Export avancé</target>
             </trans-unit>
+            <trans-unit id="vacation.CPF">
+                <source>vacation.CPF</source>
+                <target>Congés payés</target>
+            </trans-unit>
+            <trans-unit id="vacation.RTT">
+                <source>vacation.RTT</source>
+                <target>RTT</target>
+            </trans-unit>
+            <trans-unit id="vacation.SansSolde">
+                <source>vacation.SansSolde</source>
+                <target>Congés sans solde</target>
+            </trans-unit>
+            <trans-unit id="vacation.type">
+                <source>vacation.type</source>
+                <target>Type de congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.startDate">
+                <source>vacation.startDate</source>
+                <target>Date de début</target>
+            </trans-unit>
+            <trans-unit id="vacation.endDate">
+                <source>vacation.endDate</source>
+                <target>Date de fin</target>
+            </trans-unit>
+            <trans-unit id="vacation.startPm">
+                <source>vacation.startPm</source>
+                <target>Je pars en début d'aprem</target>
+            </trans-unit>
+            <trans-unit id="vacation.endAm">
+                <source>vacation.endAm</source>
+                <target>Je reviens en début d'aprem</target>
+            </trans-unit>
+            <trans-unit id="vacation.CPFLeft">
+                <source>vacation.CPFLeft</source>
+                <target>CP restants</target>
+            </trans-unit><trans-unit id="vacation.RTTLeft">
+                <source>vacation.RTTLeft</source>
+                <target>RTT restants</target>
+            </trans-unit>
+            <trans-unit id="vacation.requestVacation">
+                <source>vacation.requestVacation</source>
+                <target>Envoyer la demande de congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.btn.requestVacation">
+                <source>vacation.btn.requestVacation</source>
+                <target>Demander un congé</target>
+            </trans-unit>
+            <trans-unit id="vacation.status">
+                <source>vacation.status</source>
+                <target>Statut</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.EnCours">
+                <source>vacation.status.EnCours</source>
+                <target>En cours de validation</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.OK">
+                <source>vacation.status.OK</source>
+                <target>Accepté</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.KO">
+                <source>vacation.status.KO</source>
+                <target>Refusé</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.AcceptOrDeny">
+                <source>vacation.status.AcceptOrDeny</source>
+                <target>Accepter / Refuser</target>
+            </trans-unit>
+            <trans-unit id="vacation.seeAll">
+                <source>vacation.seeAll</source>
+                <target>Voir tous les congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.toManage">
+                <source>vacation.toManage</source>
+                <target>Congés à valider</target>
+            </trans-unit>
+            <trans-unit id="vacation.name">
+                <source>vacation.name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="vacation.list">
+                <source>vacation.list</source>
+                <target>Liste des congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.noVacation">
+                <source>vacation.noVacation</source>
+                <target>Aucun congé</target>
+            </trans-unit>
+            <trans-unit id="vacation.myVacation">
+                <source>vacation.myVacation</source>
+                <target>Mes congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.requestVacation.successMessage">
+                <source>vacation.requestVacation.successMessage</source>
+                <target>Demande de congés envoyée !</target>
+            </trans-unit>
+            <trans-unit id="vacation.lastDay">
+                <source>vacation.lastDay</source>
+                <target>Dernier jour de congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.today">
+                <source>vacation.today</source>
+                <target>En congés aujourd'hui</target>
+            </trans-unit>
+            <trans-unit id="vacation.tomorrow">
+                <source>vacation.tomorrow</source>
+                <target>En congés demain</target>
+            </trans-unit>
+            <trans-unit id="vacation.monday">
+                <source>vacation.monday</source>
+                <target>En congés lundi</target>
+            </trans-unit>
+            <trans-unit id="vacation.error.forbidden">
+                <source>vacation.error.forbidden</source>
+                <target>Vous n'avez pas les droits nécessaires pour valider les congés de ce collaborateur</target>
+            </trans-unit>
+            <trans-unit id="vacation.noVacationAwaiting">
+                <source>vacation.noVacationAwaiting</source>
+                <target>Aucun congés en attente de validation</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

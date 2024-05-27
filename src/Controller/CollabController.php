@@ -7,6 +7,8 @@ use App\Entity\MindsetDTO;
 use App\Entity\Note;
 use App\Entity\Office;
 use App\Entity\User;
+use App\Entity\Vacation;
+use App\Form\NoteType;
 use App\Repository\MepRepository;
 use App\Repository\MindsetRepository;
 use App\Repository\O3Repository;
@@ -14,6 +16,7 @@ use App\Repository\OfficeRepository;
 use App\Security\CSPDefinition;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
+use MongoDB\Driver\Manager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\NoteRepository;
@@ -87,7 +90,7 @@ class CollabController extends AbstractController
     }
 
     #[Route("/{userId}",name: "collab_index")]
-    public function index(NoteRepository $notes, UserRepository $users, OfficeRepository $officeRepository, MepRepository $mepRepository, MindsetRepository $mindsetRepository, O3Repository $o3Repository, ?int $userId = null): Response
+    public function index(NoteRepository $notes, UserRepository $users, OfficeRepository $officeRepository, MepRepository $mepRepository, MindsetRepository $mindsetRepository, O3Repository $o3Repository, ?int $userId = null, VacationRepository $vacationRepository): Response
     {
         /**
          * @var $currentUser User
@@ -184,6 +187,10 @@ class CollabController extends AbstractController
 
         $o3List = $o3Repository->findBy(['collaborator' => $collabUser]);
 
+        $vacations = $vacationRepository->findBy(['collab' => $collabUser], ['startAt' => 'DESC']);
+
+        $showVacationDetails = $currentUser->getId() === $userId ? true : false;
+
         return new Response(
             $this->renderView('collab/collab.html.twig', [
                 'collab' => $collabUser,
@@ -199,7 +206,10 @@ class CollabController extends AbstractController
                 'mindsets' => $mindsets,
                 'squads' => $squadList,
                 'mindsetsSquad' => $mindsetsSquad,
-                'o3List' => $o3List
+                'o3List' => $o3List,
+                'vacations' => $vacations,
+                'vacationsLeft' => $vacationRepository->getVacationsLeft($userId),
+                'showVacationDetails' => $showVacationDetails,
             ]),
             200,
             [
@@ -268,8 +278,4 @@ class CollabController extends AbstractController
 
         return new Response($selectMep->getState(), Response::HTTP_OK);
     }
-
-
-
-
 }

@@ -1,0 +1,44 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-solid fa-suitcase"></i> {% if title is defined %}{{ title }}{% else %}Vacances{% endif %}
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive table-borderless">
+            <table class="table user-list ">
+                {% if vacations is not empty %}
+                    <thead>
+                    <tr class="main_text_color">
+                        <th scope="col">{{ 'vacation.name' | trans }}</th>
+                        <th scope="col">{{ 'vacation.lastDay' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for vacation in vacations %}
+                        <tr>
+                            <td>{{ vacation.collab.fullName }}</td>
+                            <td>{{ vacation.endAt | format_datetime('short', 'none', locale=app.request.locale) }}
+                                {% if vacation.endAt | date('H') == 11 %} - 12h{% endif %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tbody>
+                    <tr class="text-center">
+                        <td>{{ 'vacation.noVacation' | trans }}</td>
+                    </tr>
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>

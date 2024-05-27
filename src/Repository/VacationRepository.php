@@ -13,6 +13,9 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class VacationRepository extends UserDateRepository
 {
+    public string $stateOK = "Accepté";
+    public string $stateNotOk = "Refusé";
+    public string $stateWaiting = "En cours de validation";
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,6 +40,9 @@ class VacationRepository extends UserDateRepository
             $qb->andWhere('vac.collab = :userId')
                 ->setParameter('userId', $userId);
         }
+
+        $qb->andWhere('vac.state != :state')
+            ->setParameter('state', $this->stateNotOk);
 
         $query = $qb->getQuery();
 
@@ -79,6 +85,7 @@ class VacationRepository extends UserDateRepository
     private function countVacationForYear(int $userId, string $type, ?\DateTime $debut, ?\DateTime $fin)
     {
         $qb = $this->createQueryBuilder('vac')
+            ->select('SUM(vac.value) sumVac')
             ->where('vac.collab = :userId')
             ->setParameter('userId', $userId);
         $qb->andWhere('vac.type = :type')
@@ -94,4 +101,92 @@ class VacationRepository extends UserDateRepository
         return $query->execute();
     }
 
+    /**
+     * @param int $userId
+     * @return float|int|mixed|string
+     */
+    public function getUpcomingVacations(int $userId)
+    {
+        $qb = $this->createQueryBuilder('vac')
+            ->where('vac.collab = :userId')
+            ->setParameter('userId', $userId);
+        $qb->andWhere('vac.endAt > CURRENT_TIMESTAMP()');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    /**
+     * @param \DateTime $day
+     * @return array
+     */
+    public function getCurrentVacation(\DateTime $day, string $state = null) : array
+    {
+        $qb = $this->createQueryBuilder('vac');
+
+        $qb->addSelect('collab');
+        $qb->leftJoin('vac.collab', 'collab');
+
+        $qb->where(':debut BETWEEN vac.startAt AND vac.endAt OR :debut_afternoon BETWEEN vac.startAt AND vac.endAt')
+            ->setParameter('debut', $day)
+            ->setParameter('debut_afternoon', date_modify(new \DateTime($day->format('Y-m-d H:i:s')), '+11hours59minutes'));
+
+        if($state === $this->stateNotOk){
+            $qb->andWhere('vac.state != :state')
+                ->setParameter('state', $state);
+        }
+        elseif(is_null($state)){
+            $qb->andWhere('vac.state = :state')
+                ->setParameter('state', $this->stateOK);
+        }
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    /**
+     * @param int $idManager
+     * @return array
+     */
+    public function getVacations(int $idManager, bool $toValidate = false) : array
+    {
+        $qb = $this->createQueryBuilder('vac');
+
+        $qb->addSelect('collab');
+        $qb->leftJoin('vac.collab', 'collab');
+
+        if($toValidate){
+            $qb->where('vac.state = :state')
+                ->setParameter('state', $this->stateWaiting);
+        }
+
+        $qb->andWhere('collab.manager = :idManager')
+            ->setParameter('idManager', $idManager);
+
+        $qb->orderBy('vac.startAt', 'DESC');
+
+        $query = $qb->getQuery();
+
+        return $query->execute();
+    }
+
+    /**
+     * @param int $userId
+     * @return array
+     * @throws \Exception
+     */
+    public function getVacationsLeft(int $userId) : array
+    {
+        $year = new \DateTime('today');
+        $vacationsTaken = $this->countRTTForYear($userId, $year->format('Y')) ;
+        $vacationsLeft['RTT'] = $vacationsTaken[0]['sumVac'] == null ? 10 : 10 - $vacationsTaken[0]['sumVac'];
+
+        date_modify($year, '-1 year');
+        $vacationsTaken = $this->countCPForYear($userId, $year->format('Y'));
+        $vacationsLeft['CPF'] = $vacationsTaken[0]['sumVac'] == null ? 25 : 25 - $vacationsTaken[0]['sumVac'];
+
+        return $vacationsLeft;
+    }
 }

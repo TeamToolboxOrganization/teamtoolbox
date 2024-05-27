@@ -1,0 +1,25 @@
+{% extends 'basev2.html.twig' %}
+
+{% block title %}{{ 'vacation.list' | trans }}{% endblock %}
+{% block contentHeaderTitle %}<h1 class="m-0">{{ 'vacation.list' | trans }}</h1>{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('vacation') }}
+{% endblock %}
+
+{% block stylesheet_page %}
+    {{ encore_entry_link_tags('vacation') }}
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            {% include 'vacation/manageVacations.html.twig' with {'vacations': vacations, 'title': 'vacation.list' | trans, 'showBtn': false} %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

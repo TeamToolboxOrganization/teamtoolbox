@@ -16,6 +16,7 @@ use App\Repository\O3Repository;
 use App\Repository\OfficeRepository;
 use App\Repository\SquadRepository;
 use App\Repository\UserRepository;
+use App\Repository\VacationRepository;
 use App\Security\CSPDefinition;
 use DateInterval;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,7 +39,7 @@ class DashboardController extends AbstractController
      * Cache(smaxage="10")
      */
     #[Route("/",name: "dashboard_index", defaults: ["page" => "1", "_format" => "html"])]
-    public function index(Request $request, OfficeRepository $officeRepository, MsGraphController $msTokenController, O3Repository $o3Repository, CalendarController $calendarController, ConfigurationRepository $configurationRepository, NoteRepository $notes, MindsetRepository $mindsetRepository, UserRepository $users, MepRepository $mepRepository, ManagerRegistry $managerRegistry, Security $security): Response
+    public function index(Request $request, OfficeRepository $officeRepository, MsGraphController $msTokenController, O3Repository $o3Repository, CalendarController $calendarController, ConfigurationRepository $configurationRepository, NoteRepository $notes, MindsetRepository $mindsetRepository, UserRepository $users, MepRepository $mepRepository, ManagerRegistry $managerRegistry, Security $security, VacationRepository $vacationRepository): Response
     {
         /**
          * @var $currentUser User
@@ -120,6 +121,51 @@ class DashboardController extends AbstractController
         }
         */
 
+        $todayDate = new \DateTime('today');
+        $todayVacations = $vacationRepository->getCurrentVacation($todayDate);
+        date_modify($todayDate, '+1 day');
+        $next_day = "vacation.tomorrow";
+        if($todayDate->format('l') == 'Saturday'){
+            date_modify($todayDate, '+2 day');
+            $next_day = "vacation.monday";
+        }
+        if($todayDate->format('l') == 'Sunday'){
+            date_modify($todayDate, '+1 day');
+            $next_day = "vacation.monday";
+        }
+        $tomorrowVacations = $vacationRepository->getCurrentVacation($todayDate);
+
+        // Affichage des widgets concernant les congés
+        if ($security->isGranted('ROLE_MANAGER')) {
+            $vacationsToManage = [];
+            $vacationsToManage = $vacationRepository->getVacations($currentUser->getId(), true);
+            return new Response(
+                $this->renderView('dashboard/dashboard.html.twig', [
+                    'toDiscussNotes' => $toDiscussNotes,
+                    'nextBirthdays' => $nextBirthdays,
+                    'missedBirthdays' => $missedBirthdays,
+                    'nextMepDates' => $nextMeps,
+                    'myNextMepDates' => $userNextMeps,
+                    'nextMep' => !empty($nextMep) ? $nextMep[0] : null,
+                    'mindset' => $mindsetGlobal,
+                    'officeDates' => $officeDates,
+                    'officeByDate' => $officeByDate,
+                    'showWizard' => $showWizard,
+                    'externalContent' => '',
+                    'externalTitle' => '',
+                    'events' => $eventsOutlook,
+                    'o3List' => $o3List,
+                    'vacationsToManage' => $vacationsToManage,
+                    'todayVacations' => $todayVacations,
+                    'tomorrowVacations' => $tomorrowVacations,
+                    'nextVacationDay' => $next_day
+                ]),
+                Response::HTTP_OK,
+                [
+                    'Content-Security-Policy-Report-Only' => CSPDefinition::defaultRules
+                ]
+            );
+        }
 
         return new Response(
             $this->renderView('dashboard/dashboard.html.twig', [
@@ -137,6 +183,9 @@ class DashboardController extends AbstractController
                 'externalTitle' => '',
                 'events' => $eventsOutlook,
                 'o3List' => $o3List,
+                'todayVacations' => $todayVacations,
+                'tomorrowVacations' => $tomorrowVacations,
+                'nextVacationDay' => $next_day
             ]),
             Response::HTTP_OK,
             [

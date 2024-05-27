@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+        <body>
+             <trans-unit id="vacation.error.startEndDateError">
+                <source>vacation.error.startEndDateError</source>
+                <target>The ending vacation date needs to be after the starting date</target>
+             </trans-unit>
+             <trans-unit id="vacation.error.beforeToday">
+                <source>vacation.error.beforeToday</source>
+                <target>You can't ask for a vacation that starts before today</target>
+             </trans-unit>
+             <trans-unit id="vacation.error.notEnoughVacation">
+                <source>vacation.error.notEnoughVacation</source>
+                <target>You don't have enough vacation</target>
+             </trans-unit>
+             <trans-unit id="vacation.error.sameDayLeaveComeBackAfternoon">
+                <source>vacation.error.sameDayLeaveComeBackAfternoon</source>
+                <target>You can't leave and come back in the afternoon on the same day</target>
+             </trans-unit>
+             <trans-unit id="vacation.error.alreadyInVacation">
+                <source>vacation.error.alreadyInVacation</source>
+                <target>You're already in vacation at the starting or ending vacation date</target>
+             </trans-unit>
+        </body>
+    </file>
+</xliff>

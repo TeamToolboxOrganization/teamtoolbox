@@ -229,6 +229,126 @@
                 <source>param.sup.export</source>
                 <target>Advanced Export</target>
             </trans-unit>
+
+            <trans-unit id="vacation.CPF">
+                <source>vacation.CPF</source>
+                <target>Paid Vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.RTT">
+                <source>vacation.RTT</source>
+                <target>RTT</target>
+            </trans-unit>
+            <trans-unit id="vacation.SansSolde">
+                <source>vacation.SansSolde</source>
+                <target>Unpaid Vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.type">
+                <source>vacation.type</source>
+                <target>Vacation type</target>
+            </trans-unit>
+            <trans-unit id="vacation.startDate">
+                <source>vacation.startDate</source>
+                <target>Starting date</target>
+            </trans-unit>
+            <trans-unit id="vacation.endDate">
+                <source>vacation.endDate</source>
+                <target>Ending date</target>
+            </trans-unit>
+            <trans-unit id="vacation.startPm">
+                <source>vacation.startPm</source>
+                <target>I leave in the afternoon</target>
+            </trans-unit>
+            <trans-unit id="vacation.endAm">
+                <source>vacation.endAm</source>
+                <target>I come back in the afternoon</target>
+            </trans-unit>
+            <trans-unit id="vacation.CPFLeft">
+                <source>vacation.CPFLeft</source>
+                <target>Paid vacation left</target>
+            </trans-unit><trans-unit id="vacation.RTTLeft">
+                <source>vacation.RTTLeft</source>
+                <target>RTT left</target>
+            </trans-unit>
+            <trans-unit id="vacation.requestVacation">
+                <source>vacation.requestVacation</source>
+                <target>Send vacation request</target>
+            </trans-unit>
+            <trans-unit id="vacation.btn.requestVacation">
+                <source>vacation.btn.requestVacation</source>
+                <target>Ask for a vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.status">
+                <source>vacation.status</source>
+                <target>Status</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.EnCours">
+                <source>vacation.status.EnCours</source>
+                <target>Awaiting approval</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.OK">
+                <source>vacation.status.OK</source>
+                <target>Accepted</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.KO">
+                <source>vacation.status.KO</source>
+                <target>Denied</target>
+            </trans-unit>
+            <trans-unit id="vacation.status.AcceptOrDeny">
+                <source>vacation.status.AcceptOrDeny</source>
+                <target>Accept / Deny</target>
+            </trans-unit>
+            <trans-unit id="vacation.seeAll">
+                <source>vacation.seeAll</source>
+                <target>See all vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.toManage">
+                <source>vacation.toManage</source>
+                <target>Awaiting approval vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.name">
+                <source>vacation.name</source>
+                <target>Name</target>
+            </trans-unit>
+            <trans-unit id="vacation.list">
+                <source>vacation.list</source>
+                <target>Vacation list</target>
+            </trans-unit>
+            <trans-unit id="vacation.noVacation">
+                <source>vacation.noVacation</source>
+                <target>No vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.myVacation">
+                <source>vacation.myVacation</source>
+                <target>My vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.requestVacation.successMessage">
+                <source>vacation.requestVacation.successMessage</source>
+                <target>Vacation request sent !</target>
+            </trans-unit>
+            <trans-unit id="vacation.lastDay">
+                <source>vacation.lastDay</source>
+                <target>Last vacation day</target>
+            </trans-unit>
+            <trans-unit id="vacation.today">
+                <source>vacation.today</source>
+                <target>Today vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.tomorrow">
+                <source>vacation.tomorrow</source>
+                <target>Tomorrow vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.monday">
+                <source>vacation.monday</source>
+                <target>Monday vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.error.forbidden">
+                <source>vacation.error.forbidden</source>
+                <target>You don't have the rights to accept this collaborator's vacation</target>
+            </trans-unit>
+            <trans-unit id="vacation.noVacationAwaiting">
+                <source>vacation.noVacationAwaiting</source>
+                <target>No vacation awaiting approval</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

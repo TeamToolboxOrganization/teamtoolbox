@@ -18,6 +18,7 @@
     {{ encore_entry_script_tags('checkNote') }}
 
     {{ encore_entry_script_tags('office_action') }}
+    {{ encore_entry_script_tags('vacation') }}
 {% endblock %}
 
 {% block stylesheet_page %}
@@ -25,6 +26,7 @@
     {% if showWizard %}
         {{ encore_entry_link_tags('tuto_dashboard') }}
     {% endif %}
+    {{ encore_entry_link_tags('vacation') }}
 {% endblock %}
 
 {% block contextual_menu %}
@@ -70,6 +72,23 @@
         <div class="col-md-6">
             {% include 'widgetv2/officePresence.html.twig' with {'officeByDate': officeByDate} %}
         </div>
+        {% if todayVacations is defined %}
+            <div class="col-md-3">
+                {% include 'vacation/currentCollabInVacation.html.twig' with {'vacations': todayVacations, 'title': "vacation.today" | trans } %}
+            </div>
+        {% endif %}
+        {% if tomorrowVacations is defined %}
+            <div class="col-md-3">
+                {% include 'vacation/currentCollabInVacation.html.twig' with {'vacations': tomorrowVacations, 'title': nextVacationDay | trans } %}
+            </div>
+        {% endif %}
+
+       {% if vacationsToManage is defined%}
+            <div class="col-md-6">
+                {% include 'vacation/manageVacations.html.twig' with {'vacations': vacationsToManage, 'title': "vacation.toManage" | trans, 'showBtn': true} %}
+            </div>
+        {% endif %}
+
         <div class="col-md-6">
             {% include 'widgetv2/birthdays.html.twig' with {'nextBirthdays': nextBirthdays, 'showTitle': false} %}
         </div>

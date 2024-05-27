@@ -1,0 +1,21 @@
+@import 'colors';
+
+.state-vacation{
+  color:$pending_color;
+  font-weight:600;
+}
+
+.state_ok{
+  color:$lighter_success_color;
+}
+
+.state_not_ok, .help-block{
+  color:$lighter_critical_color;
+}
+
+.vacationsCounter{
+  border-radius:5px;
+  background-color: $second_color;
+  color:white;
+  padding:0.5em;
+}

@@ -1,0 +1,88 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-solid fa-suitcase"></i> {% if title is defined %}{{ title }}{% else %}Vacances{% endif %}
+        </h3>
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive table-borderless">
+            <table class="table user-list ">
+                {% if vacations is defined and vacations is not empty %}
+                    <thead>
+                    <tr class="main_text_color">
+                        <th scope="col">{{ 'vacation.startDate' | trans }}</th>
+                        <th scope="col">{{ 'vacation.endDate' | trans }}</th>
+                        <th>{{ 'vacation.type' | trans }}</th>
+                        <th>{{ 'vacation.status' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for vacation in vacations %}
+                        <tr>
+                            <td>{{ vacation.startAt | format_datetime('short', 'none', locale=app.request.locale) }}
+                                {% if vacation.startAt | date('H') >= 11 %} - 12h
+                                {% elseif vacation.startAT | date('H') is same as '00' %}
+                                    - 9h
+                                {% endif %}
+                            </td>
+                            <td>{{ vacation.endAt | format_datetime('short', 'none', locale=app.request.locale) }}
+                                {% if vacation.endAt | date('H') == 11 %} - 12h
+                                {% elseif vacation.endAt | date('H') is same as '23' %}
+                                    - 17h
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if vacation.type is same as "Congés payés" %}
+                                    {{ 'vacation.CPF' | trans }}
+                                {% elseif vacation.type is same as "Congés sans solde" %}
+                                    {{ 'vacation.SansSolde' | trans }}
+                                {%  else %}
+                                    {{ vacation.type}}
+                                {% endif %}
+                            </td>
+                            <td class="{% if vacation.state is same as 'Accepté' %}state_ok {% elseif vacation.state is same as 'Refusé' %}state_not_ok {% endif %}state-vacation">
+                                {% if vacation.state is same as "En cours de validation" %}
+                                    {{ 'vacation.status.EnCours' | trans }}
+                                {% elseif vacation.state is same as "Accepté" %}
+                                    {{ 'vacation.status.OK' | trans }}
+                                {% elseif vacation.state is same as "Refusé" %}
+                                    {{ 'vacation.status.KO' | trans }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                {% else %}
+                    <tbody>
+                    <tr class="text-center">
+                        <td>{{ 'vacation.noVacation' | trans }}</td>
+                    </tr>
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+        {% if showVacationDetails %}
+            <div class="text-center">
+                <a href="{%  if  userId is defined %}{{ path('vacation_date_request', {userId: userId})}}{% endif %}" class="btn btn-primary m-3">{{ 'vacation.btn.requestVacation' | trans }}</a>
+            </div>
+        {% endif %}
+    </div>
+    {% if showVacationDetails %}
+        <table class="table user-list ">
+            <tbody>
+            <tr class="text-center">
+                <td>{{ 'vacation.CPFLeft' | trans }} : {{ vacationsLeft.CPF }}</td>
+                <td>{{ 'vacation.RTTLeft' | trans }} : {{ vacationsLeft.RTT }}</td>
+            </tr>
+            </tbody>
+        </table>
+    {% endif %}
+</div>
