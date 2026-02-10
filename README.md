@@ -78,3 +78,12 @@ If needed, reset persisted data with:
 ```bash
 $ docker compose down -v
 ```
+
+
+If you migrated from a previous Compose setup and still hit a login error, recreate
+volumes so the writable database is re-initialized:
+
+```bash
+$ docker compose down -v
+$ docker compose up -d --build
+```

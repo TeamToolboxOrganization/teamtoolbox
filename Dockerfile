@@ -55,3 +55,7 @@ COPY . /var/www/html/
 
 COPY --from=frontend_builder /build/public/ /var/www/html/public/
 COPY --from=backend_builder /build/vendor /var/www/html/vendor
+
+RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log /var/www/html/data && \
+    chown -R www-data:www-data /var/www/html/var /var/www/html/data && \
+    chmod -R ug+rwX /var/www/html/var /var/www/html/data
