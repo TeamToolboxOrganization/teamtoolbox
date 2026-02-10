@@ -31,13 +31,13 @@
                         <tr>
                             <td>{{ vacation.collab.fullName }}</td>
                             <td>
-                                {{ vacation.startAt | format_datetime('short', 'none', locale=app.request.locale) }}
+                                {{ vacation.startAt | date('d/m/Y') }}
                                 {% if vacation.startAt | date('H') >= 11 %} - 12h
                                 {% elseif vacation.startAT | date('H') is same as '00' %}
                                     - 9h
                                 {% endif %}
                             </td>
-                            <td>{{ vacation.endAt | format_datetime('short', 'none', locale=app.request.locale) }}
+                            <td>{{ vacation.endAt | date('d/m/Y') }}
                                 {% if vacation.endAt | date('H') == 11 %} - 12h
                                 {% elseif vacation.endAt | date('H') is same as '23' %}
                                     - 17h

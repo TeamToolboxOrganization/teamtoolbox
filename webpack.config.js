@@ -53,7 +53,7 @@ Encore
     .addEntry('vacation', './assets/js/vacation.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
-    .enableIntegrityHashes(true)
+    .enableIntegrityHashes(false)
     .configureBabel(null, {
         useBuiltIns: 'usage',
         corejs: 3,

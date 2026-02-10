@@ -26,7 +26,7 @@
                     {% for vacation in vacations %}
                         <tr>
                             <td>{{ vacation.collab.fullName }}</td>
-                            <td>{{ vacation.endAt | format_datetime('short', 'none', locale=app.request.locale) }}
+                            <td>{{ vacation.endAt | date('d/m/Y') }}
                                 {% if vacation.endAt | date('H') == 11 %} - 12h{% endif %}
                         </tr>
                     {% endfor %}
