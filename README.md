@@ -51,22 +51,22 @@ $ cd my_project/
 $ ./bin/phpunit
 ```
 
-Build and run Docker image
+Deploy with Docker Compose
 --------------------------
 
-Execute this command to build image:
+A `docker-compose.yml` file is provided to simplify Docker deployment.
+
+Start the application:
 
 ```bash
-$ docker build -t teamtoolboxorganization/teamtoolbox:latest .
+$ docker compose up -d --build
 ```
 
-Execute this command to run:
+Stop the application:
 
 ```bash
-$ docker run \
-    -d \
-    --name teamtoolbox \
-    -p 8080:80 \
-    -v $(pwd)/data:/var/www/html/data \
-    teamtoolboxorganization/teamtoolbox:latest
+$ docker compose down
 ```
+
+The application is available at <http://localhost:8080> and the SQLite data
+is persisted in `./data`.
