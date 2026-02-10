@@ -1,34 +1,44 @@
 <template>
   <v-app>
-    <v-app-bar color="primary" density="comfortable">
-      <v-app-bar-title class="font-weight-bold">TeamToolbox Next (Vue + Vuetify)</v-app-bar-title>
-      <v-chip color="white" text-color="primary" variant="flat">
+    <v-app-bar class="app-bar" density="comfortable" flat>
+      <v-app-bar-title class="font-weight-bold d-flex align-center ga-2">
+        <v-icon icon="mdi-account-group" />
+        TeamToolbox Next
+      </v-app-bar-title>
+      <v-chip color="success" variant="flat" prepend-icon="mdi-heart-pulse">
         Humeur équipe: {{ state.teamMood }}%
       </v-chip>
     </v-app-bar>
 
-    <v-main class="bg-background">
-      <v-container class="py-6" fluid>
+    <v-main class="app-main">
+      <v-container class="py-8" fluid>
         <v-row>
           <v-col cols="12" md="8" class="d-flex flex-column ga-4">
             <PostComposer :channels="channels" @publish="addPost" />
 
-            <v-card rounded="xl" elevation="1" class="pa-4">
+            <v-card class="toolbar-card pa-4">
               <div class="d-flex flex-wrap ga-3 align-center">
                 <v-chip-group v-model="activeChannel" mandatory>
-                  <v-chip v-for="channel in channels" :key="channel.id" :value="channel.id">
+                  <v-chip
+                    v-for="channel in channels"
+                    :key="channel.id"
+                    :value="channel.id"
+                    color="primary"
+                    variant="tonal"
+                  >
                     {{ channel.label }}
                   </v-chip>
                 </v-chip-group>
                 <v-spacer />
                 <v-text-field
                   v-model="search"
-                  density="compact"
+                  density="comfortable"
                   hide-details
                   prepend-inner-icon="mdi-magnify"
                   label="Rechercher"
                   variant="outlined"
-                  max-width="280"
+                  max-width="300"
+                  bg-color="white"
                 />
               </div>
             </v-card>
@@ -39,9 +49,12 @@
           <v-col cols="12" md="4" class="d-flex flex-column ga-4">
             <MeetingPanel :meetings="state.meetings" @add="addMeeting" />
 
-            <v-card rounded="xl" elevation="1">
-              <v-card-title>Repères manager</v-card-title>
-              <v-list lines="three">
+            <v-card class="manager-card">
+              <v-card-title class="d-flex align-center ga-2">
+                <v-icon icon="mdi-lightbulb-on-outline" color="warning" />
+                Repères manager
+              </v-card-title>
+              <v-list lines="three" bg-color="transparent">
                 <v-list-item
                   title="1. Prendre le pouls"
                   subtitle="Publiez un message quotidien en canal Quotidien pour suivre les blocages."
@@ -69,15 +82,28 @@ import PostComposer from './components/PostComposer.vue'
 import PostFeed from './components/PostFeed.vue'
 import { useWorkspace } from './composables/useWorkspace'
 
-const {
-  channels,
-  state,
-  activeChannel,
-  search,
-  filteredPosts,
-  addPost,
-  addComment,
-  addMeeting,
-  likePost
-} = useWorkspace()
+const { channels, state, activeChannel, search, filteredPosts, addPost, addComment, addMeeting, likePost } = useWorkspace()
 </script>
+
+<style scoped>
+.app-main {
+  background: radial-gradient(circle at top right, #e0e7ff, #f3f6fb 40%, #eef2ff 100%);
+  min-height: 100vh;
+}
+
+.app-bar {
+  background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toolbar-card {
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.manager-card {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+}
+</style>

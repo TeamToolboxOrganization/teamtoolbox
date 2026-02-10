@@ -6,16 +6,30 @@ import App from './App.vue'
 
 const vuetify = createVuetify({
   theme: {
-    defaultTheme: 'light',
+    defaultTheme: 'teamtoolbox',
     themes: {
-      light: {
+      teamtoolbox: {
+        dark: false,
         colors: {
-          primary: '#0D47A1',
-          secondary: '#1976D2',
-          accent: '#00ACC1',
-          background: '#F4F7FB'
+          primary: '#1E40AF',
+          secondary: '#0F766E',
+          accent: '#0284C7',
+          surface: '#FFFFFF',
+          background: '#F3F6FB',
+          info: '#6366F1',
+          success: '#16A34A',
+          warning: '#D97706'
         }
       }
+    }
+  },
+  defaults: {
+    VCard: {
+      rounded: 'xl',
+      elevation: 2
+    },
+    VBtn: {
+      rounded: 'lg'
     }
   }
 })
