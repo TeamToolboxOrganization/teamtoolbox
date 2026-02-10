@@ -55,3 +55,11 @@ export const initialMeetings = [
     actions: ['Camille : arbitrer backlog avant jeudi', 'Nora : proposer nouveau template CR']
   }
 ]
+
+export const initialTeamPresence = [
+  { id: crypto.randomUUID(), name: 'Camille', role: 'Manager', status: 'office' },
+  { id: crypto.randomUUID(), name: 'Nora', role: 'Product Owner', status: 'remote' },
+  { id: crypto.randomUUID(), name: 'Louis', role: 'Développeur', status: 'office' },
+  { id: crypto.randomUUID(), name: 'Yanis', role: 'Support', status: 'remote' },
+  { id: crypto.randomUUID(), name: 'Sofia', role: 'RH', status: 'away' }
+]

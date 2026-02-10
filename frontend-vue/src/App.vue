@@ -47,6 +47,12 @@
           </v-col>
 
           <v-col cols="12" md="4" class="d-flex flex-column ga-4">
+            <OfficePresenceWidget
+              :members="orderedTeamPresence"
+              :summary="presenceSummary"
+              @update-presence="setPresence"
+            />
+
             <MeetingPanel :meetings="state.meetings" @add="addMeeting" />
 
             <v-card class="manager-card">
@@ -78,11 +84,25 @@
 
 <script setup>
 import MeetingPanel from './components/MeetingPanel.vue'
+import OfficePresenceWidget from './components/OfficePresenceWidget.vue'
 import PostComposer from './components/PostComposer.vue'
 import PostFeed from './components/PostFeed.vue'
 import { useWorkspace } from './composables/useWorkspace'
 
-const { channels, state, activeChannel, search, filteredPosts, addPost, addComment, addMeeting, likePost } = useWorkspace()
+const {
+  channels,
+  state,
+  activeChannel,
+  search,
+  filteredPosts,
+  orderedTeamPresence,
+  presenceSummary,
+  addPost,
+  addComment,
+  addMeeting,
+  likePost,
+  setPresence
+} = useWorkspace()
 </script>
 
 <style scoped>

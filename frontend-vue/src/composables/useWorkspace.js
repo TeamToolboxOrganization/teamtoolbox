@@ -1,5 +1,5 @@
 import { computed, ref, watch } from 'vue'
-import { initialChannels, initialMeetings, initialPosts } from '../data/sampleData'
+import { initialChannels, initialMeetings, initialPosts, initialTeamPresence } from '../data/sampleData'
 
 const STORAGE_KEY = 'teamtoolbox-vue-workspace'
 
@@ -9,7 +9,8 @@ function buildState() {
     return {
       posts: initialPosts,
       meetings: initialMeetings,
-      teamMood: 78
+      teamMood: 78,
+      teamPresence: initialTeamPresence
     }
   }
 
@@ -19,7 +20,8 @@ function buildState() {
     return {
       posts: initialPosts,
       meetings: initialMeetings,
-      teamMood: 78
+      teamMood: 78,
+      teamPresence: initialTeamPresence
     }
   }
 }
@@ -45,6 +47,21 @@ export function useWorkspace() {
         return haystack.includes(search.value.toLowerCase())
       })
       .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  })
+
+  const presenceSummary = computed(() => {
+    return state.value.teamPresence.reduce(
+      (summary, member) => {
+        summary[member.status] += 1
+        return summary
+      },
+      { office: 0, remote: 0, away: 0 }
+    )
+  })
+
+  const orderedTeamPresence = computed(() => {
+    const order = { office: 0, remote: 1, away: 2 }
+    return [...state.value.teamPresence].sort((a, b) => order[a.status] - order[b.status] || a.name.localeCompare(b.name))
   })
 
   function addPost(payload) {
@@ -76,15 +93,25 @@ export function useWorkspace() {
     })
   }
 
+  function setPresence(memberId, status) {
+    if (!['office', 'remote', 'away'].includes(status)) return
+    const member = state.value.teamPresence.find((item) => item.id === memberId)
+    if (!member) return
+    member.status = status
+  }
+
   return {
     channels: initialChannels,
     state,
     activeChannel,
     search,
     filteredPosts,
+    presenceSummary,
+    orderedTeamPresence,
     addPost,
     addComment,
     addMeeting,
-    likePost
+    likePost,
+    setPresence
   }
 }
