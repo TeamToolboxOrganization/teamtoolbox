@@ -50,6 +50,7 @@ Encore
     //.addEntry('poc_search', './assets/js/poc_search.js')
     .addEntry('outlook_calendar', './assets/js/outlook_calendar.js')
     .addEntry('OneSignalSDKWorker', './assets/js/OneSignalSDKWorker.js')
+    .addEntry('vacation', './assets/js/vacation.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
     .enableIntegrityHashes(true)

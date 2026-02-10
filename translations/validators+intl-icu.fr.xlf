@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="fr" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="vacation.error.startEndDateError">
+                <source>vacation.error.startEndDateError</source>
+                <target>La date de fin des congés doit être après la date de début des congés</target>
+            </trans-unit>
+            <trans-unit id="vacation.error.beforeToday">
+                <source>vacation.error.beforeToday</source>
+                <target>Vous ne pouvez pas poser des congés antérieurs à la date d'aujourd'hui</target>
+            </trans-unit>
+            <trans-unit id="vacation.error.notEnoughVacation">
+                <source>vacation.error.notEnoughVacation</source>
+                <target>Votre solde de congés / RTT n'est pas suffisant</target>
+            </trans-unit>
+            <trans-unit id="vacation.error.sameDayLeaveComeBackAfternoon">
+                <source>vacation.error.sameDayLeaveComeBackAfternoon</source>
+                <target>Vous ne pouvez pas partir et revenir l'après midi dans la même journée</target>
+            </trans-unit>
+            <trans-unit id="vacation.error.alreadyInVacation">
+                <source>vacation.error.alreadyInVacation</source>
+                <target>Des congés ont déjà été posés sur cette période</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

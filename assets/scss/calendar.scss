@@ -23,3 +23,15 @@
   display: none
 }
 
+/* Vacation colors */
+.fc-h-event.state-vacation{
+  background-color:$pending_color !important;
+  border: 1px solid $pending_color !important;
+}
+
+.fc-h-event.state_ok{
+  background-color:$lighter_success_color !important;
+  border: 1px solid $lighter_success_color !important;
+}
+
+
