@@ -69,4 +69,12 @@ $ docker compose down
 ```
 
 The application is available at <http://localhost:8080> and the SQLite data
-is persisted in `./data`.
+is persisted in the Docker volume `teamtoolbox_data` (pre-seeded from the image
+on first start, which keeps the default `admin/admin` account available).
+
+
+If needed, reset persisted data with:
+
+```bash
+$ docker compose down -v
+```
