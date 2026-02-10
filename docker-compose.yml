@@ -1,0 +1,15 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: teamtoolboxorganization/teamtoolbox:latest
+    container_name: teamtoolbox
+    ports:
+      - "8080:80"
+    volumes:
+      - teamtoolbox_data:/var/www/html/data
+    restart: unless-stopped
+
+volumes:
+  teamtoolbox_data:
