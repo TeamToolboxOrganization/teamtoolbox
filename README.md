@@ -51,22 +51,61 @@ $ cd my_project/
 $ ./bin/phpunit
 ```
 
-Build and run Docker image
+Deploy with Docker Compose
 --------------------------
 
-Execute this command to build image:
+A `docker-compose.yml` file is provided to simplify Docker deployment.
+
+Start the application:
 
 ```bash
-$ docker build -t teamtoolboxorganization/teamtoolbox:latest .
+$ docker compose up -d --build
 ```
 
-Execute this command to run:
+Stop the application:
 
 ```bash
-$ docker run \
-    -d \
-    --name teamtoolbox \
-    -p 8080:80 \
-    -v $(pwd)/data:/var/www/html/data \
-    teamtoolboxorganization/teamtoolbox:latest
+$ docker compose down
+```
+
+The application is available at <http://localhost:8080> and the SQLite data
+is persisted in the Docker volume `teamtoolbox_data` (pre-seeded from the image
+on first start, which keeps the default `admin/admin` account available).
+
+
+If needed, reset persisted data with:
+
+```bash
+$ docker compose down -v
+```
+
+
+If you migrated from a previous Compose setup and still hit a login error, recreate
+volumes so the writable database is re-initialized:
+
+```bash
+$ docker compose down -v
+$ docker compose up -d --build
+```
+
+View logs from inside the container
+-----------------------------------
+
+To inspect application logs (e.g. to debug a 500 error), connect to the running
+container and read the Symfony log files:
+
+```bash
+# Open a shell in the container
+$ docker compose exec app bash
+
+# Then inside the container, view the latest logs
+$ tail -f /var/www/html/var/log/prod.log
+# or for a one-shot view
+$ cat /var/www/html/var/log/prod.log
+```
+
+To run a single command without entering the container:
+
+```bash
+$ docker compose exec app tail -100 /var/www/html/var/log/prod.log
 ```

@@ -30,7 +30,7 @@
                 {% for dateForOffice, userList in officeByDate %}
                     {% set currentDateString = dateForOffice|format_datetime(pattern="EEEE")|capitalize %}
                     {% if currentDateString != "Samedi" and currentDateString != "Dimanche" %}
-                        <li data-target="tab-users{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}" class="btn btn-info {% if isFirst %}active{% endif %}" data-btn-tab="true"><a data-toggle="tab">{% if isFirst %} Aujourd'hui{% else %} {{ currentDateString }}{% endif %}</a></li>
+                        <li data-target="tab-users{{ dateForOffice|date('Y-m-d') }}" class="btn btn-info {% if isFirst %}active{% endif %}" data-btn-tab="true"><a data-toggle="tab">{% if isFirst %} Aujourd'hui{% else %} {{ currentDateString }}{% endif %}</a></li>
                         {% set isFirst = false %}
                     {% endif %}
                 {% endfor %}
@@ -41,8 +41,8 @@
                 {% for dateForOffice, userList in officeByDate %}
                     {% set currentDateString = dateForOffice|format_datetime(pattern="EEEE")|capitalize %}
                     {% if currentDateString != "Samedi" and currentDateString != "Dimanche" %}
-                    <div class="tab-pane fade{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }} {% if isFirst %}active in{% endif %}" id="tab-users{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}">
-                        <ul class="users-list clearfix" data-date="{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}">
+                    <div class="tab-pane fade{{ dateForOffice|date('Y-m-d') }} {% if isFirst %}active in{% endif %}" id="tab-users{{ dateForOffice|date('Y-m-d') }}">
+                        <ul class="users-list clearfix" data-date="{{ dateForOffice|date('Y-m-d') }}">
                             {% if userList is not empty %}
                             {% for userPresence in userList %}
                                 {% if userPresence is not empty %}
@@ -68,7 +68,7 @@
                             {% endfor %}
                             {% endif %}
                         </ul>
-                        <a data-date="{{ dateForOffice|format_datetime(pattern="Y-MM-dd") }}" data-type="office" class="btn btn-primary pull-right">Venir ce jour</a>
+                        <a data-date="{{ dateForOffice|date('Y-m-d') }}" data-type="office" class="btn btn-primary pull-right">Venir ce jour</a>
                         <a href="{{ path('desk_view')}}" class="btn btn-primary pull-right">
                             <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Plan des bureaux
                         </a>
