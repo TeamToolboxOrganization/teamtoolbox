@@ -1,111 +1,54 @@
-Team Toolbox Application
-========================
+Team Toolbox Next (Vue + Vuetify)
+=================================
 
-Requirements
-------------
+Cette branche introduit une nouvelle version frontale de Team Toolbox, orientée
+collaboration manager/équipe, avec une expérience inspirée d’un fil de discussion
+(type réseau social interne) et des espaces d’échanges plus formels.
 
-  * PHP 8.2 or higher;
-  * PDO-SQLite PHP extension enabled;
-  * and the [usual Symfony application requirements][2].
-  * NPM 19.9.0
-  * Composer 2.5.8
+Fonctionnalités principales
+---------------------------
 
-Installation
-------------
+- Fil d’actualité d’équipe (messages quotidiens, formels, alertes) ;
+- Publication rapide d’un message ;
+- Réactions (likes) et commentaires ;
+- Filtres par canal + recherche ;
+- Espace “échanges formels” pour stocker des comptes-rendus, décisions et actions ;
+- Persistance locale (localStorage) pour conserver le contexte d’équipe.
 
-```bash
-$ cd my_project/
-$ composer install
-$ npm install
-$ npm run build
-```
+L’application est volontairement plus compacte que l’ancienne version, afin de
+fournir un socle clair et moderne facilement extensible.
 
-Usage
------
-
-There's no need to configure anything to run the application. If you have
-[installed Symfony][4] binary, run this command:
+Lancer en local (sans Docker)
+-----------------------------
 
 ```bash
-$ cd my_project/
-$ symfony serve
+cd frontend-vue
+npm install
+npm run dev
 ```
 
-Then access the application in your browser at the given URL (<https://localhost:8000> by default).
+Application disponible sur <http://localhost:5173>.
 
-If you don't have the Symfony binary installed, run `php -S localhost:8000 -t public/`
-to use the built-in PHP web server or [configure a web server][3] like Nginx or
-Apache to run the application.
+Utilisation via Docker Compose
+------------------------------
 
-Connect to application using admin account.
-Login : admin
-Password : admin
-
-Tests
------
-
-Execute this command to run tests:
+Un `docker-compose.yml` minimal est fourni pour lancer uniquement le nouveau front.
 
 ```bash
-$ cd my_project/
-$ ./bin/phpunit
+docker compose up --build
 ```
 
-Deploy with Docker Compose
---------------------------
+Application disponible sur <http://localhost:5173>.
 
-A `docker-compose.yml` file is provided to simplify Docker deployment.
-
-Start the application:
+Arrêter:
 
 ```bash
-$ docker compose up -d --build
+docker compose down
 ```
 
-Stop the application:
+Structure
+---------
 
-```bash
-$ docker compose down
-```
+- `frontend-vue/`: nouvelle application Vue 3 + Vuetify (Vite)
+- `docker-compose.yml`: exécution simple du front dans un conteneur Node
 
-The application is available at <http://localhost:8080> and the SQLite data
-is persisted in the Docker volume `teamtoolbox_data` (pre-seeded from the image
-on first start, which keeps the default `admin/admin` account available).
-
-
-If needed, reset persisted data with:
-
-```bash
-$ docker compose down -v
-```
-
-
-If you migrated from a previous Compose setup and still hit a login error, recreate
-volumes so the writable database is re-initialized:
-
-```bash
-$ docker compose down -v
-$ docker compose up -d --build
-```
-
-View logs from inside the container
------------------------------------
-
-To inspect application logs (e.g. to debug a 500 error), connect to the running
-container and read the Symfony log files:
-
-```bash
-# Open a shell in the container
-$ docker compose exec app bash
-
-# Then inside the container, view the latest logs
-$ tail -f /var/www/html/var/log/prod.log
-# or for a one-shot view
-$ cat /var/www/html/var/log/prod.log
-```
-
-To run a single command without entering the container:
-
-```bash
-$ docker compose exec app tail -100 /var/www/html/var/log/prod.log
-```

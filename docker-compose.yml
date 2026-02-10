@@ -1,15 +1,11 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: teamtoolboxorganization/teamtoolbox:latest
-    container_name: teamtoolbox
+  frontend:
+    image: node:20-alpine
+    container_name: teamtoolbox_frontend_vue
+    working_dir: /app
+    command: sh -c "npm install && npm run dev"
     ports:
-      - "8080:80"
+      - "5173:5173"
     volumes:
-      - teamtoolbox_data:/var/www/html/data
+      - ./frontend-vue:/app
     restart: unless-stopped
-
-volumes:
-  teamtoolbox_data:
