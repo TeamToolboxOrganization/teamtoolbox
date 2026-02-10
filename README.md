@@ -87,3 +87,25 @@ volumes so the writable database is re-initialized:
 $ docker compose down -v
 $ docker compose up -d --build
 ```
+
+View logs from inside the container
+-----------------------------------
+
+To inspect application logs (e.g. to debug a 500 error), connect to the running
+container and read the Symfony log files:
+
+```bash
+# Open a shell in the container
+$ docker compose exec app bash
+
+# Then inside the container, view the latest logs
+$ tail -f /var/www/html/var/log/prod.log
+# or for a one-shot view
+$ cat /var/www/html/var/log/prod.log
+```
+
+To run a single command without entering the container:
+
+```bash
+$ docker compose exec app tail -100 /var/www/html/var/log/prod.log
+```
